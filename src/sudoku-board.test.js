@@ -59,9 +59,9 @@ describe('SudokuBoard', () => {
         it('de-selects all selected cells', () => {
             const unselectedSudoku = SudokuBoard.createEmpty(9);
             const selectedSudoku = unselectedSudoku
-                                    .toggleCellSelect(0, 0)
-                                    .toggleCellSelect(1, 4)
-                                    .toggleCellSelect(3, 1);
+                                    .selectCell(0, 0)
+                                    .selectCell(1, 4)
+                                    .selectCell(3, 1);
             expect(selectedSudoku.clearAllSelections()).toEqual(unselectedSudoku);
         });
     });
