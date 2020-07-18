@@ -4,6 +4,11 @@ import './App.css';
 import SudokuBoard from './sudoku-board';
 import {getCellClasses} from './cell-classes';
 
+const LEFT_ARROW = 37;
+const UP_ARROW = 38;
+const RIGHT_ARROW = 39;
+const DOWN_ARROW = 40;
+
 function Cell(props) {
   const borderClasses = getCellClasses({
     rowIndex: props.rowIndex, 
@@ -13,24 +18,20 @@ function Cell(props) {
 
   const selectedClass = props.cell.isSelected ? 'cell-selected' : '';
 
-  function onMouseDown(e) {
-    if (e.ctrlKey) {
-      props.addCellToSelection(props.rowIndex, props.colIndex);
-    } else {
-      props.startNewCellSelection(props.rowIndex, props.colIndex);
-    }
+  function handleMouseDown(e) {
+    props.handleSelection(props.rowIndex, props.colIndex, e);
     props.setIsSelecting(true);
   }
 
-  function onMouseEnter() {
+  function handleMouseEnter() {
     props.handleCellMouseEnter(props.rowIndex, props.colIndex);
   }
 
   return (
     <div 
       className={`cell ${borderClasses} ${selectedClass}`} 
-      onMouseDown={onMouseDown}
-      onMouseEnter={onMouseEnter}
+      onMouseDown={handleMouseDown}
+      onMouseEnter={handleMouseEnter}
     >
       <span className="cell-value">{props.cell.value}</span>
     </div>
@@ -47,9 +48,8 @@ function Row(props) {
           rowIndex={props.rowIndex} 
           colIndex={index} 
           puzzleSize={props.cells.length}
-          addCellToSelection={props.addCellToSelection}
+          handleSelection={props.handleSelection}
           handleCellMouseEnter={props.handleCellMouseEnter}
-          startNewCellSelection={props.startNewCellSelection}
           setIsSelecting={props.setIsSelecting}
         />
       )}
@@ -65,9 +65,8 @@ function Grid(props) {
           key={index} 
           cells={row} 
           rowIndex={index}
-          addCellToSelection={props.addCellToSelection}
+          handleSelection={props.handleSelection}
           handleCellMouseEnter={props.handleCellMouseEnter}
-          startNewCellSelection={props.startNewCellSelection}
           setIsSelecting={props.setIsSelecting}
         />
       )}
@@ -78,16 +77,8 @@ function Grid(props) {
 function Game() {
   const [board, updateBoard] = useImmer(SudokuBoard.createEmpty());
   const [isSelecting, setIsSelecting] = useState(false);
+
   const stopSelecting = () => setIsSelecting(false);
-  
-  useEffect(() => {
-    if (window) {
-      window.addEventListener('mouseup', stopSelecting);
-    }
-    return () => {
-      window.removeEventListener('mouseup', stopSelecting);
-    }
-  });
 
   function startNewCellSelection(rowIndex, colIndex) {
     updateBoard(draft => {
@@ -99,18 +90,57 @@ function Game() {
     updateBoard(draft => draft.selectCell(rowIndex, colIndex));
   }
 
+  function handleSelection(rowIndex, colIndex, e) {
+    if (e.ctrlKey) {
+      addCellToSelection(rowIndex, colIndex);
+    } else {
+      startNewCellSelection(rowIndex, colIndex);
+    }
+  }
+
   function handleCellMouseEnter(rowIndex, colIndex) {
     if (isSelecting && !board[rowIndex][colIndex].isSelected) {
       updateBoard(draft => draft.selectCell(rowIndex, colIndex));
     }
   }
+  
+  function handleKeyDown(e) {
+    if (board.hasSelection) {
+      const rowIndex = board.topSelectedRowIndex;
+      const colIndex = board.topSelectedColIndex;
+      switch(e.keyCode) {
+        case LEFT_ARROW:
+          handleSelection(rowIndex, (colIndex + board.size- 1) % board.size, e);
+          break;
+        case UP_ARROW:
+          handleSelection((rowIndex + board.size - 1) % board.size, colIndex, e);
+          break;
+        case RIGHT_ARROW:
+          handleSelection(rowIndex, (colIndex + 1) % board.size, e);
+          break;
+        case DOWN_ARROW:
+          handleSelection((rowIndex + 1) % board.size, colIndex, e);
+          break;
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (window) {
+      window.addEventListener('mouseup', stopSelecting);
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('mouseup', stopSelecting);
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+  });
 
   return (
     <Grid 
       board={board}
-      addCellToSelection={addCellToSelection}
+      handleSelection={handleSelection}
       handleCellMouseEnter={handleCellMouseEnter}
-      startNewCellSelection={startNewCellSelection}
       setIsSelecting={setIsSelecting}
     />
   )

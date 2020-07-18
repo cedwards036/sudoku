@@ -10,6 +10,9 @@ describe('SudokuBoard', () => {
                 expect(cell.value).toEqual(0);
             });
         });
+        expect(sudoku.topSelectedRowIndex).toEqual(-1);
+        expect(sudoku.topSelectedColIndex).toEqual(-1);
+        expect(sudoku.hasSelection).toEqual(false);
     });
 
     describe('forEachRow', () => {
@@ -44,6 +47,17 @@ describe('SudokuBoard', () => {
             expect(sudoku[0][0].isSelected).toEqual(true);
         });
 
+        it('updates the currently-selected cell pointers', () => {
+            const sudoku = SudokuBoard.createEmpty(9).selectCell(3, 4);
+            expect(sudoku.topSelectedRowIndex).toEqual(3);
+            expect(sudoku.topSelectedColIndex).toEqual(4);
+        });
+
+        it('updates the hasSelection flag', () => {
+            const sudoku = SudokuBoard.createEmpty(9).selectCell(3, 4);
+            expect(sudoku.hasSelection).toEqual(true);
+        });
+
         it('does nothing if the cell does not exist', () => {
             const sudoku = SudokuBoard.createEmpty(4);
             expect(sudoku).toEqual(sudoku.selectCell(13, 45));
@@ -63,6 +77,17 @@ describe('SudokuBoard', () => {
                                     .selectCell(1, 4)
                                     .selectCell(3, 1);
             expect(selectedSudoku.clearAllSelections()).toEqual(unselectedSudoku);
+        });
+
+        it('updates the currently-selected cell pointers to -1', () => {
+            const sudoku = SudokuBoard.createEmpty(4).selectCell(3, 4).clearAllSelections();
+            expect(sudoku.topSelectedRowIndex).toEqual(-1);
+            expect(sudoku.topSelectedColIndex).toEqual(-1);
+        });
+
+        it('updates the hasSelection flag', () => {
+            const sudoku = SudokuBoard.createEmpty(9).selectCell(3, 4).clearAllSelections();
+            expect(sudoku.hasSelection).toEqual(false);
         });
     });
 });

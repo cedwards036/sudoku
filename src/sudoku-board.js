@@ -8,6 +8,9 @@ export default function SudokuBoard(boardArray) {
         board[index] = row.map(value => SudokuCell(value));
     });
     board.size = boardArray.length;
+    board.topSelectedRowIndex = -1;
+    board.topSelectedColIndex = -1;
+    board.hasSelection = false;
     return board;
 }
 
@@ -35,6 +38,9 @@ SudokuBoard.prototype = {
         if (this.cellExists(rowIndex, colIndex)) {
             return produce(this, draft => {
                 draft[rowIndex][colIndex].isSelected = true;
+                draft.topSelectedRowIndex = rowIndex;
+                draft.topSelectedColIndex = colIndex;
+                draft.hasSelection = true;
             });
         } else {
             return this;
@@ -44,6 +50,9 @@ SudokuBoard.prototype = {
     clearAllSelections() {
         return produce(this, draft => {
             draft.forEachRow(row => row.map(cell => cell.isSelected = false));
+            draft.topSelectedRowIndex = -1;
+            draft.topSelectedColIndex = -1;
+            draft.hasSelection = false;
         });
     },
 
