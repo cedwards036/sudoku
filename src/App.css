@@ -4,6 +4,12 @@
   --border-color: black;
   --light-border: solid 1px var(--border-color);
   --heavy-border: solid 3px var(--border-color);
+  --cell-value-font-size: 40px;
+  --selected-cell-color: yellow;
+}
+
+.grid {
+  cursor: pointer;
 }
 
 .row {
@@ -17,10 +23,11 @@
   max-height: var(--max-cell-size);
   border-right: var(--light-border);
   border-bottom: var(--light-border);
-  cursor: pointer;
   -webkit-user-select: none;
   -ms-user-select: none; 
   user-select: none; 
+  display: flex;
+  align-items: center;
 }
 
 .cell-thick-upper-border {
@@ -37,4 +44,14 @@
 
 .cell-thick-lower-border {
   border-bottom: var(--heavy-border);
+}
+
+.cell-value {
+  font-size: var(--cell-value-font-size);
+  text-align: center;
+  width: 60px;
+}
+
+.cell-selected {
+  background-color: var(--selected-cell-color);
 }
