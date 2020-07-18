@@ -34,6 +34,14 @@ SudokuBoard.prototype = {
         });
     },
 
+    forEachSelected(callback) {
+        this.forEachRow(row => row.forEach((cell, index) => {
+            if (cell.isSelected) {
+                callback(cell, index);
+            }
+        }));
+    },
+
     selectCell(rowIndex, colIndex) {
         if (this.cellExists(rowIndex, colIndex)) {
             return produce(this, draft => {
@@ -53,6 +61,14 @@ SudokuBoard.prototype = {
             draft.topSelectedRowIndex = -1;
             draft.topSelectedColIndex = -1;
             draft.hasSelection = false;
+        });
+    },
+
+    updateSelectedValues(newValue) {
+        return produce(this, draft => {
+            draft.forEachSelected(cell => {
+                cell.value = newValue;
+            });
         });
     },
 

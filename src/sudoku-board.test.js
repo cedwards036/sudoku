@@ -90,5 +90,23 @@ describe('SudokuBoard', () => {
             expect(sudoku.hasSelection).toEqual(false);
         });
     });
+
+    describe('updateSelectedValues', () => {
+        it('does nothing if no cells are selected', () => {
+            const sudoku = SudokuBoard.createEmpty();
+            expect(sudoku).toEqual(sudoku.updateSelectedValues(3));
+        });
+        
+        it('updates the value of all selected cells', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .selectCell(1, 4)
+                                        .selectCell(3, 1)
+                                        .updateSelectedValues(3);
+            expect(sudoku[0][0].value).toEqual(3);
+            expect(sudoku[1][4].value).toEqual(3);
+            expect(sudoku[3][1].value).toEqual(3);
+        });
+    });
 });
 
