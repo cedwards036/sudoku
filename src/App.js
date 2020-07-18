@@ -148,6 +148,8 @@ function Game() {
       case DOWN_ARROW:
         handleSelection((rowIndex + 1) % board.size, colIndex, e);
         break;
+      default:
+        break;
     }
   }
 
