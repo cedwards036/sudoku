@@ -82,6 +82,26 @@ function Grid(props) {
   )
 }
 
+function CreationPuzzleFeedback(props) {
+  let feedbackText;
+  let feedbackClass;
+  if (props.solutionCount === 0) {
+    feedbackText = 'This puzzle has no solution :(';
+    feedbackClass = 'creation-puzzle-feedback-bad';
+  } else if (props.solutionCount === 1) {
+    feedbackText = 'This puzzle has exactly one solution :)';
+    feedbackClass = 'creation-puzzle-feedback-good';
+  } else {
+    feedbackText = 'This puzzle has more than one solution :(';
+    feedbackClass = 'creation-puzzle-feedback-bad';
+  }
+  return (
+    <div className={`creation-puzzle-feedback ${feedbackClass}`}>
+      {feedbackText}
+    </div>
+  )
+}
+
 function Game() {
   const [board, updateBoard] = useImmer(SudokuBoard.createEmpty());
   const [isSelecting, setIsSelecting] = useState(false);
@@ -188,13 +208,20 @@ function Game() {
     }
   });
 
+  function getSolutionsCount() {
+    return board.getSolutions().length;
+  }
+
   return (
-    <Grid 
-      board={board}
-      handleSelection={handleSelection}
-      handleCellMouseEnter={handleCellMouseEnter}
-      setIsSelecting={setIsSelecting}
-    />
+    <div className="game">
+      <CreationPuzzleFeedback solutionCount={getSolutionsCount()}/>
+      <Grid 
+        board={board}
+        handleSelection={handleSelection}
+        handleCellMouseEnter={handleCellMouseEnter}
+        setIsSelecting={setIsSelecting}
+      />
+    </div>
   )
 }
 

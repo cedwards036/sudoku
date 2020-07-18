@@ -1,4 +1,5 @@
 import {produce, immerable} from "immer"
+import {solveClassicSudoku} from "@cedwards036/sudoku-solver";
 
 import SudokuCell from './sudoku-cell';
 
@@ -70,6 +71,14 @@ SudokuBoard.prototype = {
                 cell.value = newValue;
             });
         });
+    },
+
+    getSolutions() {
+        return solveClassicSudoku(this.toValuesArray());
+    },
+
+    toValuesArray() {
+        return this.mapRows(row => row.map(cell => cell.value));
     },
 
     cellExists(rowIndex, colIndex) {
