@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useImmer} from 'use-immer';
 import './App.css';
 import SudokuBoard from './sudoku-board';
+import History from './history';
 import {getCellClasses} from './cell-classes';
 
 const LEFT_ARROW = 37;
@@ -103,23 +104,37 @@ function CreationPuzzleFeedback(props) {
 }
 
 function Game() {
-  const [board, updateBoard] = useImmer(SudokuBoard.createEmpty());
+  const [board, updateBoard] = useImmer(History(SudokuBoard.createEmpty()));
+  
   const [isSelecting, setIsSelecting] = useState(false);
 
   const stopSelecting = () => setIsSelecting(false);
 
   function startNewCellSelection(rowIndex, colIndex) {
     updateBoard(draft => {
-      return draft.clearAllSelections().selectCell(rowIndex, colIndex);
+      draft.currentState = draft.currentState.clearAllSelections().selectCell(rowIndex, colIndex);
     });
   }
 
   function addCellToSelection(rowIndex, colIndex) {
-    updateBoard(draft => draft.selectCell(rowIndex, colIndex));
+    updateBoard(draft => {
+      draft.currentState = draft.currentState.selectCell(rowIndex, colIndex)
+    });
   }
 
   function updateSelectedValues(value) {
-    updateBoard(draft => draft.updateSelectedValues(value));
+    updateBoard(draft => {
+      const newState = draft.currentState.updateSelectedValues(value);
+      return draft.setCurrentState(newState);
+    });
+  }
+
+  function undo() {
+    updateBoard(draft => draft.undo());
+  }
+
+  function redo() {
+    updateBoard(draft => draft.redo());
   }
 
   function handleSelection(rowIndex, colIndex, e) {
@@ -131,21 +146,27 @@ function Game() {
   }
 
   function handleCellMouseEnter(rowIndex, colIndex) {
-    if (isSelecting && !board[rowIndex][colIndex].isSelected) {
-      updateBoard(draft => draft.selectCell(rowIndex, colIndex));
+    if (isSelecting && !board.currentState[rowIndex][colIndex].isSelected) {
+      updateBoard(draft => {
+        draft.currentState = draft.currentState.selectCell(rowIndex, colIndex);
+      });
     }
   }
   
   function handleKeyDown(e) {
-    if (board.hasSelection) {
-      const rowIndex = board.topSelectedRowIndex;
-      const colIndex = board.topSelectedColIndex;
+    if (board.currentState.hasSelection) {
+      const rowIndex = board.currentState.topSelectedRowIndex;
+      const colIndex = board.currentState.topSelectedColIndex;
       if (isArrowKey(e.keyCode)) {
         handleArrowKeyDown(e, rowIndex, colIndex);
       } else if (isNumberKey(e.keyCode)) {
         handleNumberKeyDown(e);
       } else if (isBackspaceOrDelete(e.keyCode)) {
         handleCellDeletion();
+      } else if (isUndoCommand(e)) {
+        undo();
+      } else if (isRedoCommand(e)) {
+        redo();
       }
     }
   }
@@ -157,20 +178,28 @@ function Game() {
   function handleArrowKeyDown(e, rowIndex, colIndex) {
     switch(e.keyCode) {
       case LEFT_ARROW:
-        handleSelection(rowIndex, (colIndex + board.size- 1) % board.size, e);
+        handleSelection(rowIndex, decrementWithWraparound(colIndex), e);
         break;
       case UP_ARROW:
-        handleSelection((rowIndex + board.size - 1) % board.size, colIndex, e);
+        handleSelection(decrementWithWraparound(rowIndex), colIndex, e);
         break;
       case RIGHT_ARROW:
-        handleSelection(rowIndex, (colIndex + 1) % board.size, e);
+        handleSelection(rowIndex, incrementWithWraparound(colIndex), e);
         break;
       case DOWN_ARROW:
-        handleSelection((rowIndex + 1) % board.size, colIndex, e);
+        handleSelection(incrementWithWraparound(rowIndex), colIndex, e);
         break;
       default:
         break;
     }
+  }
+
+  function incrementWithWraparound(index) {
+    return (index + board.currentState.size + 1) % board.currentState.size;
+  }
+
+  function decrementWithWraparound(index) {
+    return (index + board.currentState.size - 1) % board.currentState.size;
   }
 
   function isNumberKey(keyCode) {
@@ -197,6 +226,14 @@ function Game() {
     updateSelectedValues(0);
   }
 
+  function isUndoCommand(e) {
+    return e.keyCode === 90 && e.ctrlKey;
+  }
+
+  function isRedoCommand(e) {
+    return e.keyCode === 89 && e.ctrlKey;
+  }
+
   useEffect(() => {
     if (window) {
       window.addEventListener('mouseup', stopSelecting);
@@ -209,14 +246,14 @@ function Game() {
   });
 
   function getSolutionsCount() {
-    return board.getSolutions().length;
+    return board.currentState.getSolutions().length;
   }
 
   return (
     <div className="game">
       <CreationPuzzleFeedback solutionCount={getSolutionsCount()}/>
       <Grid 
-        board={board}
+        board={board.currentState}
         handleSelection={handleSelection}
         handleCellMouseEnter={handleCellMouseEnter}
         setIsSelecting={setIsSelecting}
