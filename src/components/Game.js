@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useImmer} from 'use-immer';
-import SudokuBoard from '../sudoku-board';
-import History from '../history';
+import SudokuBoard from '../core/sudoku-board';
+import History from '../core/history';
 import Grid from './Grid';
 import CreationPuzzleFeedback from './CreationPuzzleFeedback';
 

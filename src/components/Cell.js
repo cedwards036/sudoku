@@ -1,5 +1,5 @@
 import React from 'react';
-import {getCellClasses} from '../cell-classes';
+import {getCellClasses} from '../core/cell-classes';
 
 export default function Cell(props) {
     const borderClasses = getCellClasses({
