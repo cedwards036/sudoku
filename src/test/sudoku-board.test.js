@@ -1,5 +1,5 @@
-import SudokuBoard from './sudoku-board';
-import SudokuCell from './sudoku-cell';
+import SudokuBoard from '../sudoku-board';
+import SudokuCell from '../sudoku-cell';
 
 describe('SudokuBoard', () => {
     it('can create an empty grid of the given dimension', () => {

@@ -1,5 +1,5 @@
-import SudokuBoard from './sudoku-board';
-import {encodeBoard, decodeBoard} from './sudoku-board-encoding';
+import SudokuBoard from '../sudoku-board';
+import {encodeBoard, decodeBoard} from '../sudoku-board-encoding';
 
 describe('encodeBoard', () => {
     it('encodes the board as a base-62 string representing the board\'s size and the board\'s cell values', () => {
