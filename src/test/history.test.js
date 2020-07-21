@@ -1,5 +1,5 @@
 import {produce} from 'immer';
-import History from './history';
+import History from '../core/history';
 
 describe('History', () => {
     it('initializes with an initial state', () => {

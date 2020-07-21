@@ -1,4 +1,4 @@
-import {getCellClasses} from '../cell-classes';
+import {getCellClasses} from '../core/cell-classes';
 
 describe('getCellClasses', () => {
     describe('upper border', () => {
