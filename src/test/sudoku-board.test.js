@@ -63,6 +63,33 @@ describe('SudokuBoard', () => {
         });
     });
 
+    describe('selectAllCells', () => {
+        it('selects every cell in the board', () => {
+            const sudoku = SudokuBoard.createEmpty(4).selectAllCells();
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+                    expect(sudoku[i][j].isSelected).toEqual(true);
+                }
+            }
+        });
+
+        it('does nothing if all cells are already selected', () => {
+            const sudoku = SudokuBoard.createEmpty(4).selectAllCells();
+            expect(sudoku.selectAllCells()).toEqual(sudoku);
+        });
+
+        it('updates the currently-selected cell pointers to 0', () => {
+            const sudoku = SudokuBoard.createEmpty(4).selectAllCells();
+            expect(sudoku.topSelectedRowIndex).toEqual(0);
+            expect(sudoku.topSelectedColIndex).toEqual(0);
+        });
+
+        it('updates the hasSelection flag', () => {
+            const sudoku = SudokuBoard.createEmpty(4).selectAllCells();
+            expect(sudoku.hasSelection).toEqual(true);
+        });
+    });
+
     describe('clearAllSelections', () => {
         it('does nothing if no cells are selected', () => {
             const sudoku = SudokuBoard.createEmpty();

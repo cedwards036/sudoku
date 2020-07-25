@@ -56,6 +56,15 @@ SudokuBoard.prototype = {
         }
     },
 
+    selectAllCells() {
+        return produce(this, draft => {
+            draft.forEachRow(row => row.map(cell => cell.isSelected = true));
+            draft.topSelectedRowIndex = 0;
+            draft.topSelectedColIndex = 0;
+            draft.hasSelection = true;
+        });
+    },
+
     clearAllSelections() {
         return produce(this, draft => {
             draft.forEachRow(row => row.map(cell => cell.isSelected = false));

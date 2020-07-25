@@ -45,6 +45,12 @@ export default function Game() {
     updateBoard(draft => draft.redo());
   }
 
+  function selectAll() {
+    updateBoard(draft => {
+      draft.currentState = draft.currentState.selectAllCells();
+    });
+  }
+
   function handleSelection(rowIndex, colIndex, e) {
     if (e.ctrlKey) {
       addCellToSelection(rowIndex, colIndex);
@@ -75,6 +81,9 @@ export default function Game() {
         undo();
       } else if (isRedoCommand(e)) {
         redo();
+      } else if (isSelectAllCommand(e)) {
+        e.preventDefault();
+        selectAll();
       }
     }
   }
@@ -140,6 +149,10 @@ export default function Game() {
 
   function isRedoCommand(e) {
     return e.keyCode === 89 && e.ctrlKey;
+  }
+
+  function isSelectAllCommand(e) {
+    return e.keyCode === 65 && e.ctrlKey;
   }
 
   useEffect(() => {
