@@ -12,7 +12,7 @@ const RIGHT_ARROW = 39;
 const DOWN_ARROW = 40;
 
 export default function Game() {
-  const [board, updateBoard] = useImmer(History(SudokuBoard.createEmpty()));
+  const [board, updateBoard] = useImmer(History(SudokuBoard.createEmpty().selectCell(0, 0)));
   
   const [isSelecting, setIsSelecting] = useState(false);
 
