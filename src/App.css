@@ -22,8 +22,18 @@ body {
 }
 
 .App {
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+header {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 5px 0px;
+  font-size: 2em;
+  text-align: center;
 }
 
 .game {
