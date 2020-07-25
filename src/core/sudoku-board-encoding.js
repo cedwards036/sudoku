@@ -51,7 +51,7 @@ function padFrontWithNZeros(array, n) {
 }
 
 function splitIntoNSubarrays(array, n) {
-    const result = Array(n).fill().map(() => Array());
+    const result = Array(n).fill().map(() => []);
     array.forEach((value, index) => {
         result[Math.floor(index / n)].push(value);
     });
