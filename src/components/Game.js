@@ -1,21 +1,25 @@
 import React, {useState, useEffect} from 'react';
 import {useImmer} from 'use-immer';
+import Modal from 'react-modal';
 import SudokuBoard from '../core/sudoku-board';
 import History from '../core/history';
 import HelpButton from './HelpButton';
 import CreationPuzzleFeedback from './CreationPuzzleFeedback';
 import Grid from './Grid';
 import ControlBoard from './ControlBoard';
+import KeyboardShortcutTable from './KeyboardShortcutTable';
 
 const LEFT_ARROW = 37;
 const UP_ARROW = 38;
 const RIGHT_ARROW = 39;
 const DOWN_ARROW = 40;
 
+Modal.setAppElement('#root')
+
 export default function Game() {
   const [board, updateBoard] = useImmer(History(SudokuBoard.createEmpty().selectCell(0, 0)));
-  
   const [isSelecting, setIsSelecting] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const stopSelecting = () => setIsSelecting(false);
 
@@ -69,7 +73,7 @@ export default function Game() {
   }
   
   function handleKeyDown(e) {
-    if (board.currentState.hasSelection) {
+    if (board.currentState.hasSelection && !modalIsOpen) {
       const rowIndex = board.currentState.topSelectedRowIndex;
       const colIndex = board.currentState.topSelectedColIndex;
       if (isArrowKey(e.keyCode)) {
@@ -156,6 +160,14 @@ export default function Game() {
     return e.keyCode === 65 && e.ctrlKey;
   }
 
+  function openModal() {
+    setModalIsOpen(true);
+  }
+
+  function closeModal() {
+    setModalIsOpen(false);
+  }
+
   useEffect(() => {
     if (window) {
       window.addEventListener('mouseup', stopSelecting);
@@ -173,7 +185,7 @@ export default function Game() {
 
   return (
     <div className="game">
-      <HelpButton/>
+      <HelpButton handleClick={openModal}/>
       <CreationPuzzleFeedback solutionCount={getSolutionsCount()}/>
       <Grid 
         board={board.currentState}
@@ -187,6 +199,16 @@ export default function Game() {
         handleUndoClick={undo}
         handleRedoClick={redo}
       />
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Keyboard Shortcuts"
+        className="modal"
+        overlayClassName="modal-overlay"
+        closeTimeoutMS={300}
+      >
+        <KeyboardShortcutTable/>
+      </Modal>
     </div>
   )
 }

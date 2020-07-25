@@ -1,17 +1,18 @@
 :root {
   --cell-size: 8vw;
   --max-cell-size: 60px;
-  --font-color: rgb(255, 255, 255);
-  --border-color: rgba(150, 150, 150);
-  --background-color: #121212;
   --light-border-width: 1px;
   --light-border: solid var(--light-border-width) var(--border-color);
   --heavy-border-width: 3px;
   --heavy-border: solid var(--heavy-border-width) var(--border-color);
   --cell-value-font-size: 40px;
+  --font-color: rgb(255, 255, 255);
+  --border-color: rgba(150, 150, 150);
+  --background-color: #121212;
   --selected-cell-color: rgba(1, 135, 134, 0.6);
   --warning-color: #cf6679;
   --primary-color: #03dac6;
+  --modal-overlay-color: rgba(50, 50, 50, 0.7);
 }
 
 body {
@@ -172,4 +173,60 @@ button:hover {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   color: black;
+}
+
+.modal {
+  width: calc(var(--cell-size) * 9);
+  max-width: calc(var(--max-cell-size) * 9);
+  margin: 100px auto;
+  background-color: var(--background-color);
+  outline: none;
+  border-radius: 25px;
+  padding: 30px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--modal-overlay-color);
+}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+  opacity: 0;
+}
+
+.keyboard-shortcut-modal {
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+kbd {
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  padding: 2px;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 10px;
 }
