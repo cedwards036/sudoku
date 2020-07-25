@@ -1,3 +1,5 @@
+/* global BigInt */
+
 import SudokuBoard from './sudoku-board';
 
 const BaseDigits = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

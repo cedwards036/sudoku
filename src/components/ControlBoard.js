@@ -1,5 +1,6 @@
 import React from 'react';
 import ControlButton from './ControlButton';
+import SolveButton from './SolveButton';
 
 export default function ControlBoard(props) {
     const numberButtons = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => {
@@ -7,7 +8,6 @@ export default function ControlBoard(props) {
         return <ControlButton 
                     key={num} 
                     handleClick={handleClick}
-                    sizeClass="one-square"
                 >
                     {num}
                 </ControlButton>
@@ -18,9 +18,10 @@ export default function ControlBoard(props) {
                 {numberButtons}
             </div>
             <div className="control-row">
-                <ControlButton handleClick={props.handleDeleteClick} sizeClass="three-squares">Delete</ControlButton>
-                <ControlButton handleClick={props.handleUndoClick} sizeClass="three-squares">Undo</ControlButton>
-                <ControlButton handleClick={props.handleRedoClick} sizeClass="three-squares">Redo</ControlButton>
+                <ControlButton handleClick={props.handleDeleteClick}>Delete</ControlButton>
+                <ControlButton handleClick={props.handleUndoClick}>Undo</ControlButton>
+                <ControlButton handleClick={props.handleRedoClick}>Redo</ControlButton>
+                <SolveButton solveURL={props.solveURL} solutionCount={props.solutionCount}>Solve</SolveButton>
             </div>
         </div>
     )

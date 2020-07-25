@@ -3,6 +3,7 @@ import {useImmer} from 'use-immer';
 import Modal from 'react-modal';
 import SudokuBoard from '../core/sudoku-board';
 import History from '../core/history';
+import {encodeBoard} from '../core/sudoku-board-encoding'
 import HelpButton from './HelpButton';
 import CreationPuzzleFeedback from './CreationPuzzleFeedback';
 import Grid from './Grid';
@@ -198,6 +199,8 @@ export default function Game() {
         handleDeleteClick={handleCellDeletion}
         handleUndoClick={undo}
         handleRedoClick={redo}
+        solveURL={`/#/${encodeBoard(board.currentState)}`}
+        solutionCount={getSolutionsCount()}
       />
       <Modal
         isOpen={modalIsOpen}

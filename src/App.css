@@ -131,6 +131,7 @@ header span {
 .control-button {
   height: var(--cell-size);
   max-height: var(--max-cell-size);
+  width: 100%;
   border-radius: 10px;
   border: none;
   margin: 3px;
@@ -139,16 +140,10 @@ header span {
   color: var(--font-color);
   background-color: var(--background-color);
   border: 1px solid var(--border-color);
-}
-
-.control-button.one-square {
-  width: var(--cell-size);
-  max-width: var(--max-cell-size);
-}
-
-.control-button.three-squares {
-  width: calc(var(--cell-size) * 3);
-  max-width: calc(var(--max-cell-size) * 3);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .help-button {
@@ -163,16 +158,24 @@ header span {
   top: 30px;
 }
 
-button:focus {
+.control-button:focus, .help-button:focus {
   outline: none;
   border-color: var(--primary-color);
   color: var(--primary-color);
 }
 
-button:hover {
+.control-button:hover, .help-button:hover {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   color: black;
+  user-select: none;
+}
+
+.disabled, .disabled:hover {
+  cursor: auto;
+  color: var(--border-color);
+  background-color: var(--background-color);
+  border-color: var(--border-color);
 }
 
 .modal {
