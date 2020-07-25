@@ -3,6 +3,7 @@ import {useImmer} from 'use-immer';
 import SudokuBoard from '../core/sudoku-board';
 import History from '../core/history';
 import Grid from './Grid';
+import ControlBoard from './ControlBoard';
 import CreationPuzzleFeedback from './CreationPuzzleFeedback';
 
 const LEFT_ARROW = 37;
@@ -164,6 +165,12 @@ export default function Game() {
         handleSelection={handleSelection}
         handleCellMouseEnter={handleCellMouseEnter}
         setIsSelecting={setIsSelecting}
+      />
+      <ControlBoard 
+        handleNumberClick={updateSelectedValues}
+        handleDeleteClick={handleCellDeletion}
+        handleUndoClick={undo}
+        handleRedoClick={redo}
       />
     </div>
   )

@@ -2,10 +2,13 @@
   --cell-size: 8vw;
   --max-cell-size: 60px;
   --border-color: black;
-  --light-border: solid 1px var(--border-color);
-  --heavy-border: solid 3px var(--border-color);
+  --light-border-width: 1px;
+  --light-border: solid var(--light-border-width) var(--border-color);
+  --heavy-border-width: 3px;
+  --heavy-border: solid var(--heavy-border-width) var(--border-color);
   --cell-value-font-size: 40px;
-  --selected-cell-color: yellow;
+  --selected-cell-color: rgba(255, 255, 0, 0.445);
+  --button-color: #428bca;
   --warning-color: #d9534f;
   --success-color: #5cb85c;
 }
@@ -85,5 +88,45 @@ body {
 
 .creation-puzzle-feedback-good {
   background-color: var(--success-color);
+}
+
+.control-board {
+  margin-top: 15px;
+}
+
+.control-row {
+  display: flex;
+  justify-content: space-between;
+  width: calc(var(--cell-size) * 9 + var(--light-border-width) * 6 + var(--heavy-border-width) * 4);
+  max-width: calc(var(--max-cell-size) * 9 + var(--light-border-width) * 6 + var(--heavy-border-width) * 4);
+}
+
+.control-button {
+  height: var(--cell-size);
+  max-height: var(--max-cell-size);
+  border-radius: 10px;
+  border: none;
+  margin: 3px;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+.control-button:hover {
+  background-color: var(--button-color);
+}
+
+.control-button:focus {
+  outline: none;
+  border: 1px solid var(--button-color);
+}
+
+.control-button.one-square {
+  width: var(--cell-size);
+  max-width: var(--max-cell-size);
+}
+
+.control-button.three-squares {
+  width: calc(var(--cell-size) * 3);
+  max-width: calc(var(--max-cell-size) * 3);
 }
 
