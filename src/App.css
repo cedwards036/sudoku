@@ -46,6 +46,7 @@ header span {
   background-color: var(--background-color);
   padding: 20px 40px;
   border-radius: 50px;
+  position: relative;
 }
 
 .grid {
@@ -139,18 +140,6 @@ header span {
   border: 1px solid var(--border-color);
 }
 
-.control-button:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-}
-
-.control-button:hover {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  color: black;
-}
-
 .control-button.one-square {
   width: var(--cell-size);
   max-width: var(--max-cell-size);
@@ -161,3 +150,26 @@ header span {
   max-width: calc(var(--max-cell-size) * 3);
 }
 
+.help-button {
+  font-size: 100%;
+  border-radius: 50%;
+  background-color: var(--background-color);
+  color: var(--font-color);
+  border: var(--light-border);
+  cursor: pointer;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+}
+
+button:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+button:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: black;
+}

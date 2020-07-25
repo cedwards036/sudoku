@@ -2,9 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {useImmer} from 'use-immer';
 import SudokuBoard from '../core/sudoku-board';
 import History from '../core/history';
+import HelpButton from './HelpButton';
+import CreationPuzzleFeedback from './CreationPuzzleFeedback';
 import Grid from './Grid';
 import ControlBoard from './ControlBoard';
-import CreationPuzzleFeedback from './CreationPuzzleFeedback';
 
 const LEFT_ARROW = 37;
 const UP_ARROW = 38;
@@ -172,6 +173,7 @@ export default function Game() {
 
   return (
     <div className="game">
+      <HelpButton/>
       <CreationPuzzleFeedback solutionCount={getSolutionsCount()}/>
       <Grid 
         board={board.currentState}
