@@ -1,26 +1,38 @@
 :root {
   --cell-size: 8vw;
   --max-cell-size: 60px;
-  --border-color: black;
+  --font-color: rgb(255, 255, 255);
+  --border-color: rgba(150, 150, 150);
+  --background-color: #121212;
   --light-border-width: 1px;
   --light-border: solid var(--light-border-width) var(--border-color);
   --heavy-border-width: 3px;
   --heavy-border: solid var(--heavy-border-width) var(--border-color);
   --cell-value-font-size: 40px;
-  --selected-cell-color: rgba(255, 255, 0, 0.445);
-  --button-color: #428bca;
-  --warning-color: #d9534f;
-  --success-color: #5cb85c;
+  --selected-cell-color: rgba(1, 135, 134, 0.6);
+  --button-color: #bb86fc;
+  --warning-color: #cf6679;
+  --success-color: #03dac6;
 }
 
 body {
   font-family: sans-serif;
+  color: var(--font-color);
+  background-color: black;
+}
+
+.App {
+  display: flex;
+  justify-content: center;
 }
 
 .game {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
+  background-color: var(--background-color);
+  padding: 30px 60px;
+  border-radius: 50px;
 }
 
 .grid {
@@ -77,9 +89,9 @@ body {
   padding:20px;
   border-radius: 25px;
   text-align: center;
-  color: white;
   font-size: 18px;
   line-height: 30px;
+  color: black;
 }
 
 .creation-puzzle-feedback-bad {
@@ -109,15 +121,21 @@ body {
   margin: 3px;
   cursor: pointer;
   font-size: 1.5em;
-}
-
-.control-button:hover {
-  background-color: var(--button-color);
+  color: var(--font-color);
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
 }
 
 .control-button:focus {
   outline: none;
-  border: 1px solid var(--button-color);
+  border-color: var(--button-color);
+  color: var(--button-color);
+}
+
+.control-button:hover {
+  background-color: var(--button-color);
+  border-color: var(--button-color);
+  color: black;
 }
 
 .control-button.one-square {
