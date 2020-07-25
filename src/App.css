@@ -10,9 +10,8 @@
   --heavy-border: solid var(--heavy-border-width) var(--border-color);
   --cell-value-font-size: 40px;
   --selected-cell-color: rgba(1, 135, 134, 0.6);
-  --button-color: #bb86fc;
   --warning-color: #cf6679;
-  --success-color: #03dac6;
+  --primary-color: #03dac6;
 }
 
 body {
@@ -109,7 +108,7 @@ header {
 }
 
 .creation-puzzle-feedback-good {
-  background-color: var(--success-color);
+  background-color: var(--primary-color);
 }
 
 .control-board {
@@ -138,13 +137,13 @@ header {
 
 .control-button:focus {
   outline: none;
-  border-color: var(--button-color);
-  color: var(--button-color);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .control-button:hover {
-  background-color: var(--button-color);
-  border-color: var(--button-color);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   color: black;
 }
 
