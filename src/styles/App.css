@@ -13,19 +13,6 @@ body {
   width: 100%;
 }
 
-header {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 10px 0px;
-  font-size: 2em;
-  text-align: center;
-}
-
-header a, header a:visited {
-  text-decoration: none;
-  color: var(--font-color);
-}
-
 .game {
   display: inline-flex;
   flex-direction: column;
