@@ -1,19 +1,4 @@
-:root {
-  --cell-size: 8vw;
-  --max-cell-size: 60px;
-  --light-border-width: 1px;
-  --light-border: solid var(--light-border-width) var(--border-color);
-  --heavy-border-width: 3px;
-  --heavy-border: solid var(--heavy-border-width) var(--border-color);
-  --cell-value-font-size: 40px;
-  --font-color: rgb(255, 255, 255);
-  --border-color: rgba(150, 150, 150);
-  --background-color: #121212;
-  --selected-cell-color: rgba(1, 135, 134, 0.6);
-  --warning-color: #cf6679;
-  --primary-color: #03dac6;
-  --modal-overlay-color: rgba(50, 50, 50, 0.7);
-}
+@import 'common.css';
 
 body {
   font-family: sans-serif;
@@ -57,46 +42,6 @@ header a, header a:visited {
 
 .row {
   display: flex;
-}
-
-.cell {
-  width: var(--cell-size);
-  height: var(--cell-size);
-  max-width: var(--max-cell-size);
-  max-height: var(--max-cell-size);
-  border-right: var(--light-border);
-  border-bottom: var(--light-border);
-  -webkit-user-select: none;
-  -ms-user-select: none; 
-  user-select: none; 
-  display: flex;
-  align-items: center;
-}
-
-.cell-thick-upper-border {
-  border-top: var(--heavy-border);
-}
-
-.cell-thick-right-border {
-  border-right: var(--heavy-border);
-}
-
-.cell-thick-left-border {
-  border-left: var(--heavy-border);
-}
-
-.cell-thick-lower-border {
-  border-bottom: var(--heavy-border);
-}
-
-.cell-value {
-  font-size: var(--cell-value-font-size);
-  text-align: center;
-  width: 60px;
-}
-
-.cell-selected {
-  background-color: var(--selected-cell-color);
 }
 
 .creation-puzzle-feedback {

@@ -1,0 +1,16 @@
+:root {
+    --cell-size: 8vw;
+    --max-cell-size: 60px;
+    --light-border-width: 1px;
+    --light-border: solid var(--light-border-width) var(--border-color);
+    --heavy-border-width: 3px;
+    --heavy-border: solid var(--heavy-border-width) var(--border-color);
+    --cell-value-font-size: 40px;
+    --font-color: rgb(255, 255, 255);
+    --border-color: rgba(150, 150, 150);
+    --background-color: #121212;
+    --selected-cell-color: rgba(1, 135, 134, 0.6);
+    --warning-color: #cf6679;
+    --primary-color: #03dac6;
+    --modal-overlay-color: rgba(50, 50, 50, 0.7);
+  }

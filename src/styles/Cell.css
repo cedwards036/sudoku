@@ -1,0 +1,42 @@
+@import 'common.css';
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    max-width: var(--max-cell-size);
+    max-height: var(--max-cell-size);
+    border-right: var(--light-border);
+    border-bottom: var(--light-border);
+    -webkit-user-select: none;
+    -ms-user-select: none; 
+    user-select: none; 
+    display: flex;
+    align-items: center;
+  }
+  
+  .cell-thick-upper-border {
+    border-top: var(--heavy-border);
+  }
+  
+  .cell-thick-right-border {
+    border-right: var(--heavy-border);
+  }
+  
+  .cell-thick-left-border {
+    border-left: var(--heavy-border);
+  }
+  
+  .cell-thick-lower-border {
+    border-bottom: var(--heavy-border);
+  }
+  
+  .cell-value {
+    font-size: var(--cell-value-font-size);
+    text-align: center;
+    width: 60px;
+  }
+  
+  .cell-selected {
+    background-color: var(--selected-cell-color);
+  }
+  
