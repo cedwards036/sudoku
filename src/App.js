@@ -16,13 +16,9 @@ function App() {
       <div className="App">
         <Header/>
         <Switch>
-          <Route path="/enter-puzzle">
-            <Game/>
-          </Route>
-          <Route path="/solve/:id" children={<Game/>}/>
-          <Route path="/">
-            <HomePage/>
-          </Route>
+          <Route path="/edit/:boardEncoding" children={<Game/>}/>
+          <Route path="/solve/:boardEncoding" children={<Game/>}/>
+          <Route path="/"><HomePage/></Route>
         </Switch>
         <Footer/>
       </div>

@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {useImmer} from 'use-immer';
+import { useParams, useHistory} from 'react-router-dom';
 import Modal from 'react-modal';
 import '../styles/Modal.css';
-import SudokuBoard from '../core/sudoku-board';
 import History from '../core/history';
-import {encodeBoard} from '../core/sudoku-board-encoding'
+import {encodeBoard, decodeBoard} from '../core/sudoku-board-encoding'
 import HelpButton from './HelpButton';
 import CreationPuzzleFeedback from './CreationPuzzleFeedback';
 import Grid from './Grid';
@@ -19,10 +19,11 @@ const DOWN_ARROW = 40;
 Modal.setAppElement('#root')
 
 export default function Game() {
-  const [board, updateBoard] = useImmer(History(SudokuBoard.createEmpty().selectCell(0, 0)));
+  const {boardEncoding} = useParams();
+  const history = useHistory();
+  const [board, updateBoard] = useImmer(History(decodeBoard(boardEncoding).selectCell(0, 0)));
   const [isSelecting, setIsSelecting] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
   const stopSelecting = () => setIsSelecting(false);
 
   function startNewCellSelection(rowIndex, colIndex) {
@@ -39,17 +40,16 @@ export default function Game() {
 
   function updateSelectedValues(value) {
     updateBoard(draft => {
-      const newState = draft.currentState.updateSelectedValues(value);
-      return draft.setCurrentState(newState);
+      return draft.setCurrentState(board.currentState.updateSelectedValues(value));
     });
   }
 
   function undo() {
-    updateBoard(draft => draft.undo());
+    updateBoard(draft => board.undo());
   }
 
   function redo() {
-    updateBoard(draft => draft.redo());
+    updateBoard(draft => board.redo());
   }
 
   function selectAll() {
@@ -169,6 +169,13 @@ export default function Game() {
   function closeModal() {
     setModalIsOpen(false);
   }
+
+  useEffect(() => {
+    const currentEncoding = encodeBoard(board.currentState);
+    if (boardEncoding !== currentEncoding) {
+      history.replace(currentEncoding);
+    }
+  }, [history, board]);
 
   useEffect(() => {
     if (window) {
