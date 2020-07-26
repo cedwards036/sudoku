@@ -1,0 +1,36 @@
+@import 'common.css';
+
+.home-page {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    max-width: 650px;
+}
+  
+.home-page p {
+    margin: 10px 0px;
+    line-height: 1.3em;
+}
+  
+.home-page a:not(.button), .home-page a:visited:not(.button) {
+    color: var(--primary-color);
+}
+  
+.home-page .button {
+    height: 60px;
+}
+  
+.home-page h2 {
+    margin: 15px 0px;
+}
+  
+.footnote {
+    color: var(--border-color);
+    font-size: 0.75em;
+}
+  
+.explanation {
+    background-color: var(--background-color);
+    padding: 20px 40px;
+    border-radius: 50px;
+}
