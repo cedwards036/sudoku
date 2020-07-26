@@ -207,7 +207,7 @@ export default function Game() {
         handleDeleteClick={handleCellDeletion}
         handleUndoClick={undo}
         handleRedoClick={redo}
-        solveURL={`/#/${encodeBoard(board.currentState)}`}
+        solveURL={`/solve/${encodeBoard(board.currentState)}`}
         solutionCount={getSolutionsCount()}
       />
       <Modal
