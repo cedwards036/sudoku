@@ -36,7 +36,9 @@ function base62StringToDecimalString(encodedString) {
     const encodedDigits = encodedString.split('').reverse();
     encodedDigits.forEach((digit, index) => {
         digitValue = BigInt(BaseDigits.indexOf(digit));
-        result += (base ** BigInt(index)) * digitValue; 
+        //Must be BigInt(Number(base) ** index) instead of (base ** BigInt(index))
+        //because Babel compiles ** to Math.pow, which is not compatible with BigInt
+        result += BigInt(Number(base) ** index) * digitValue; 
     });
     return result.toString();
 }
