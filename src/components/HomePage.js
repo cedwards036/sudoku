@@ -35,8 +35,8 @@ export default function HomePage() {
                     you have set yourself and want to send to other people. 
                 </p>
                 <p>
-                    Once you have entered your puzzle, click the "Solve" button to 
-                    go to its Solve page. In keeping with Cracking the Cryptic's recommendations,
+                    Once you have entered a puzzle, click the "Solve" button to 
+                    go to its Solve page. Per Cracking the Cryptic's recommendations,
                     this app allows for both corner pencil marks for box candidates 
                     (Snyder notation) and center pencil marks for cell candidates. Other 
                     features, such as automatic number highlighting and error indication,
@@ -44,7 +44,7 @@ export default function HomePage() {
                 </p>
                 <p>
                     Because this app encodes puzzles as URLs, you can share a puzzle 
-                    simply by copying the solve link and sending it to your friends. 
+                    simply by copying and sharing the solve link. 
                     Just click the "Share" button to automatically copy the link to 
                     your clipboard, or manually copy the URL in your browser's address
                     bar.

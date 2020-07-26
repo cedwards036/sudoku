@@ -8,6 +8,7 @@ import './App.css';
 import Header from './components/Header';
 import HomePage from './components/HomePage';
 import Game from './components/Game';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <HomePage/>
           </Route>
         </Switch>
+        <Footer/>
       </div>
     </Router>
   );

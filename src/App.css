@@ -100,13 +100,13 @@ header a, header a:visited {
 }
 
 .creation-puzzle-feedback {
-  height: 30px;
+  height: 15px;
   margin-bottom: 15px;
   padding: 15px;
-  border-radius: 20px;
+  border-radius: 15px;
   text-align: center;
   font-size: 18px;
-  line-height: 30px;
+  line-height: 15px;
   color: black;
 }
 
@@ -259,6 +259,10 @@ th, td {
   color: black;
 }
 
+.home-page h2 {
+  margin: 15px 0px;
+}
+
 .footnote {
   color: var(--border-color);
   font-size: 0.75em;
@@ -268,4 +272,18 @@ th, td {
   background-color: var(--background-color);
   padding: 20px 40px;
   border-radius: 50px;
+}
+
+footer {
+  color: var(--border-color);
+  text-align: center;
+  margin-top: 10px;
+}
+
+footer a {
+  color: var(--main-text-color);
+}
+
+footer a:visited {
+  color: var(--main-text-color);
 }
