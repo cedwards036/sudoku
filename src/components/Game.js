@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useImmer} from 'use-immer';
 import Modal from 'react-modal';
+import '../styles/Modal.css';
 import SudokuBoard from '../core/sudoku-board';
 import History from '../core/history';
 import {encodeBoard} from '../core/sudoku-board-encoding'

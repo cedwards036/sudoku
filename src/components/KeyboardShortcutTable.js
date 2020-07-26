@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/KeyboardShortcutTable.css';
 
 export default function KeyboardShortcutTable() {
     return (

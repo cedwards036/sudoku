@@ -1,0 +1,25 @@
+@import 'common.css';
+
+.keyboard-shortcut-modal {
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+  
+.keyboard-shortcut-modal kbd {
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    padding: 2px;
+}
+  
+.keyboard-shortcut-modal table {
+    border-collapse: collapse;
+    text-align: left;
+}
+  
+.keyboard-shortcut-modal th, .keyboard-shortcut-modal td {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+}
