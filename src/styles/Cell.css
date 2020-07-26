@@ -12,31 +12,31 @@
     user-select: none; 
     display: flex;
     align-items: center;
-  }
-  
-  .cell-thick-upper-border {
+}
+
+.cell-thick-upper-border {
     border-top: var(--heavy-border);
-  }
-  
-  .cell-thick-right-border {
+}
+
+.cell-thick-right-border {
     border-right: var(--heavy-border);
-  }
-  
-  .cell-thick-left-border {
+}
+
+.cell-thick-left-border {
     border-left: var(--heavy-border);
-  }
-  
-  .cell-thick-lower-border {
+}
+
+.cell-thick-lower-border {
     border-bottom: var(--heavy-border);
-  }
-  
-  .cell-value {
+}
+
+.cell-value {
     font-size: var(--cell-value-font-size);
     text-align: center;
     width: 60px;
-  }
-  
-  .cell-selected {
+}
+
+.cell-selected {
     background-color: var(--selected-cell-color);
-  }
+}
   

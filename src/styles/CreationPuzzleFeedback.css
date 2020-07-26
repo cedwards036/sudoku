@@ -9,12 +9,12 @@
     font-size: 18px;
     line-height: 15px;
     color: black;
-  }
-  
-  .creation-puzzle-feedback-bad {
-    background-color: var(--warning-color);
-  }
-  
-  .creation-puzzle-feedback-good {
-    background-color: var(--primary-color);
-  }
+}
+
+.creation-puzzle-feedback-bad {
+    background-color: var(--warning-color); 
+}
+
+.creation-puzzle-feedback-good {
+    background-color: var(--primary-color); 
+}
