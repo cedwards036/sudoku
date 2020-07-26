@@ -1,7 +1,8 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 export default function Header() {
     return (
-        <header>S U D O K U</header>
+        <header><Link to="/">S U D O K U</Link></header>
     )
 }

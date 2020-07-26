@@ -36,8 +36,9 @@ header {
   text-align: center;
 }
 
-header span {
-  color: var(--primary-color);
+header a, header a:visited {
+  text-decoration: none;
+  color: var(--font-color);
 }
 
 .game {
@@ -232,4 +233,39 @@ table {
 th, td {
   border: 1px solid var(--border-color);
   padding: 10px;
+}
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  max-width: 650px;
+}
+
+.home-page p {
+  margin: 10px 0px;
+  line-height: 1.3em;
+}
+
+.home-page a, .home-page a:visited {
+  color: var(--primary-color);
+}
+
+.home-page a.control-button {
+  color: white;
+}
+
+.home-page a.control-button:hover {
+  color: black;
+}
+
+.footnote {
+  color: var(--border-color);
+  font-size: 0.75em;
+}
+
+.explanation {
+  background-color: var(--background-color);
+  padding: 20px 40px;
+  border-radius: 50px;
 }
