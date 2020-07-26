@@ -5,7 +5,7 @@ export default function HomePage() {
     return (
         <div className="home-page">
             <div className="explanation">
-                <Link to="/enter-puzzle" className="control-button">Enter a puzzle</Link>
+                <Link to="/enter-puzzle" className="button">Enter a puzzle</Link>
                 <h2>What is Sudoku?</h2>
                 <p>
                     <q cite="https://en.wikipedia.org/wiki/Sudoku">

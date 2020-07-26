@@ -42,12 +42,8 @@ body {
   max-width: calc(var(--max-cell-size) * 9 + var(--light-border-width) * 6 + var(--heavy-border-width) * 4);
 }
 
-.control-button {
-  height: var(--cell-size);
-  max-height: var(--max-cell-size);
-  width: 100%;
+.button {
   border-radius: 10px;
-  border: none;
   margin: 3px;
   cursor: pointer;
   font-size: 1.5em;
@@ -60,32 +56,38 @@ body {
   justify-content: center;
 }
 
-.help-button {
-  font-size: 100%;
-  border-radius: 50%;
-  background-color: var(--background-color);
-  color: var(--font-color);
-  border: var(--light-border);
-  cursor: pointer;
-  position: absolute;
-  right: 30px;
-  top: 30px;
-}
-
-.control-button:focus, .help-button:focus {
+.button:focus {
   outline: none;
   border-color: var(--primary-color);
   color: var(--primary-color);
 }
 
-.control-button:hover, .help-button:hover {
+.button:hover {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   color: black;
   user-select: none;
 }
 
-.disabled, .disabled:hover {
+.control-button {
+  height: var(--cell-size);
+  max-height: var(--max-cell-size);
+  /*
+  make the buttons wider than necessary so flexbox will auto-calculate their 
+  widths to fit the row
+  */
+  width: 100%; 
+}
+
+.help-button {
+  font-size: 100%;
+  border-radius: 50%;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+}
+
+.button.disabled, .button.disabled:hover {
   cursor: auto;
   color: var(--border-color);
   background-color: var(--background-color);
@@ -104,16 +106,12 @@ body {
   line-height: 1.3em;
 }
 
-.home-page a, .home-page a:visited {
+.home-page a:not(.button), .home-page a:visited:not(.button) {
   color: var(--primary-color);
 }
 
-.home-page a.control-button {
-  color: white;
-}
-
-.home-page a.control-button:hover {
-  color: black;
+.home-page .button {
+  height: 60px;
 }
 
 .home-page h2 {
