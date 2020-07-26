@@ -130,17 +130,3 @@ body {
   padding: 20px 40px;
   border-radius: 50px;
 }
-
-footer {
-  color: var(--border-color);
-  text-align: center;
-  margin-top: 10px;
-}
-
-footer a {
-  color: var(--main-text-color);
-}
-
-footer a:visited {
-  color: var(--main-text-color);
-}
