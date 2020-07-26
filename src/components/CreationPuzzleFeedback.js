@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/CreationPuzzleFeedback.css';
 
 export default function CreationPuzzleFeedback(props) {
     let feedbackText;

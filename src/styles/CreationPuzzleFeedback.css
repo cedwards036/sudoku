@@ -1,0 +1,20 @@
+@import 'common.css';
+
+.creation-puzzle-feedback {
+    height: 15px;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 15px;
+    color: black;
+  }
+  
+  .creation-puzzle-feedback-bad {
+    background-color: var(--warning-color);
+  }
+  
+  .creation-puzzle-feedback-good {
+    background-color: var(--primary-color);
+  }
