@@ -1,0 +1,22 @@
+@import 'common.css';
+
+.control-board {
+    margin-top: 15px;
+}
+  
+.control-row {
+    display: flex;
+    justify-content: space-between;
+    width: calc(var(--cell-size) * 9 + var(--light-border-width) * 6 + var(--heavy-border-width) * 4);
+    max-width: calc(var(--max-cell-size) * 9 + var(--light-border-width) * 6 + var(--heavy-border-width) * 4);
+}
+
+.control-button {
+    height: var(--cell-size);
+    max-height: var(--max-cell-size);
+    /*
+    make the buttons wider than necessary so flexbox will auto-calculate their 
+    widths to fit the row
+    */
+    width: 100%; 
+  }

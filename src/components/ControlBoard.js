@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/ControlBoard.css';
 import ControlButton from './ControlButton';
 import SolveButton from './SolveButton';
 
