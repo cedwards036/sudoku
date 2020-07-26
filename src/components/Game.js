@@ -175,7 +175,7 @@ export default function Game() {
     if (boardEncoding !== currentEncoding) {
       history.replace(currentEncoding);
     }
-  }, [history, board]);
+  }, [history, board, boardEncoding]);
 
   useEffect(() => {
     if (window) {
