@@ -82,6 +82,14 @@ SudokuBoard.prototype = {
         });
     },
 
+    updateSelectedUserValues(newUserValue) {
+        return produce(this, draft => {
+            draft.forEachSelected(cell => {
+                cell.userValue = newUserValue;
+            });
+        });
+    },
+
     addToSelectedCornerMarks(newMark) {
         return produce(this, draft => {
             draft.forEachSelected(cell => {

@@ -6,7 +6,8 @@ describe('SudokuBoard', () => {
         expect(sudoku.size).toEqual(4);
         sudoku.forEachRow(row => {
             row.forEach(cell => {
-                expect(cell.value).toEqual(0);
+                expect(cell.value).toBe(0);
+                expect(cell.userValue).toBe(0);
                 expect(cell.cornerMarks).toEqual([]);
                 expect(cell.centerMarks).toEqual([]);
             });
@@ -134,6 +135,24 @@ describe('SudokuBoard', () => {
             expect(sudoku[0][0].value).toEqual(3);
             expect(sudoku[1][4].value).toEqual(3);
             expect(sudoku[3][1].value).toEqual(3);
+        });
+    });
+
+    describe('updateSelectedUserValues', () => {
+        it('does nothing if no cells are selected', () => {
+            const sudoku = SudokuBoard.createEmpty();
+            expect(sudoku).toEqual(sudoku.updateSelectedValues(3));
+        });
+        
+        it('updates the user value of all selected cells', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .selectCell(1, 4)
+                                        .selectCell(3, 1)
+                                        .updateSelectedUserValues(3);
+            expect(sudoku[0][0].userValue).toEqual(3);
+            expect(sudoku[1][4].userValue).toEqual(3);
+            expect(sudoku[3][1].userValue).toEqual(3);
         });
     });
 
