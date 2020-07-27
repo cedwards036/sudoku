@@ -36,9 +36,7 @@ function base62StringToDecimalString(encodedString) {
     const encodedDigits = encodedString.split('').reverse();
     encodedDigits.forEach((digit, index) => {
         digitValue = BigInt(BaseDigits.indexOf(digit));
-        //Must be BigInt(Number(base) ** index) instead of (base ** BigInt(index))
-        //because Babel compiles ** to Math.pow, which is not compatible with BigInt
-        result += BigInt(Number(base) ** index) * digitValue; 
+        result += bigIntPower(base, index) * digitValue;
     });
     return result.toString();
 }
@@ -57,5 +55,15 @@ function splitIntoNSubarrays(array, n) {
     array.forEach((value, index) => {
         result[Math.floor(index / n)].push(value);
     });
+    return result;
+}
+
+//Had to implement custom exponentiation function for BigInts because Babel 
+//compiles ** to Math.pow, which is not compatible with BigInt
+function bigIntPower(base, exponent) {
+    let result = 1n;
+    for (let i = 0; i < exponent; i++) {
+        result = result * base;
+    }
     return result;
 }
