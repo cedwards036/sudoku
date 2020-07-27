@@ -7,6 +7,8 @@ describe('SudokuBoard', () => {
         sudoku.forEachRow(row => {
             row.forEach(cell => {
                 expect(cell.value).toEqual(0);
+                expect(cell.cornerMarks).toEqual([]);
+                expect(cell.centerMarks).toEqual([]);
             });
         });
         expect(sudoku.topSelectedRowIndex).toEqual(-1);
