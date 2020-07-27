@@ -82,6 +82,38 @@ SudokuBoard.prototype = {
         });
     },
 
+    addToSelectedCornerMarks(newMark) {
+        return produce(this, draft => {
+            draft.forEachSelected(cell => {
+                cell.addCornerMark(newMark);
+            });
+        });
+    },
+
+    removeFromSelectedCornerMarks(newMark) {
+        return produce(this, draft => {
+            draft.forEachSelected(cell => {
+                cell.removeCornerMark(newMark);
+            });
+        });
+    },
+
+    addToSelectedCenterMarks(newMark) {
+        return produce(this, draft => {
+            draft.forEachSelected(cell => {
+                cell.addCenterMark(newMark);
+            });
+        });
+    },
+
+    removeFromSelectedCenterMarks(newMark) {
+        return produce(this, draft => {
+            draft.forEachSelected(cell => {
+                cell.removeCenterMark(newMark);
+            });
+        });
+    },
+
     getSolutions() {
         return solveClassicSudoku(this.toValuesArray());
     },
