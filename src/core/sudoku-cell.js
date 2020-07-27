@@ -1,3 +1,5 @@
+import { immerable } from "immer";
+
 export default function SudokuCell(value = 0) {
     const cell = Object.create(SudokuCell.prototype);
     cell.value = value;
@@ -8,6 +10,7 @@ export default function SudokuCell(value = 0) {
 }
 
 SudokuCell.prototype = {
+    [immerable]: true,
     addCornerMark(newMark) {
         insertIntoUniqueSortedArray(this.cornerMarks, newMark);
     },

@@ -45,11 +45,11 @@ export default function Game() {
   }
 
   function undo() {
-    updateBoard(draft => board.undo());
+    updateBoard(draft => draft.undo());
   }
 
   function redo() {
-    updateBoard(draft => board.redo());
+    updateBoard(draft => draft.redo());
   }
 
   function selectAll() {
