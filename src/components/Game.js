@@ -25,7 +25,6 @@ export default function Game() {
   const [isSelecting, setIsSelecting] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const stopSelecting = () => setIsSelecting(false);
-
   function startNewCellSelection(rowIndex, colIndex) {
     updateBoard(draft => {
       draft.currentState = draft.currentState.clearAllSelections().selectCell(rowIndex, colIndex);
@@ -208,6 +207,8 @@ export default function Game() {
         handleUndoClick={undo}
         handleRedoClick={redo}
         solveURL={`/solve/${encodeBoard(board.currentState)}`}
+        canUndo={board.past.length > 0}
+        canRedo={board.future.length > 0}
         solutionCount={getSolutionsCount()}
       />
       <Modal

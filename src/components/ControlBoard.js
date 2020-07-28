@@ -19,9 +19,9 @@ export default function ControlBoard(props) {
                 {numberButtons}
             </div>
             <div className="control-row">
-                <ControlButton handleClick={props.handleDeleteClick}>Delete</ControlButton>
-                <ControlButton handleClick={props.handleUndoClick}>Undo</ControlButton>
-                <ControlButton handleClick={props.handleRedoClick}>Redo</ControlButton>
+                <ControlButton handleClick={props.handleDeleteClick} disabled={false}>Delete</ControlButton>
+                <ControlButton handleClick={props.handleUndoClick} disabled={!props.canUndo}>Undo</ControlButton>
+                <ControlButton handleClick={props.handleRedoClick} disabled={!props.canRedo}>Redo</ControlButton>
                 <SolveButton solveURL={props.solveURL} solutionCount={props.solutionCount}>Solve</SolveButton>
             </div>
         </div>
