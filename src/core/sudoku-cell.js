@@ -1,4 +1,5 @@
 import { immerable } from "immer";
+import CellValueTypes from './cell-value-types';
 
 export default function SudokuCell(value = 0, userValue = 0) {
     const cell = Object.create(SudokuCell.prototype);
@@ -26,7 +27,27 @@ SudokuCell.prototype = {
 
     removeCornerMark(mark) {
         removeFromArray(this.cornerMarks, mark);
-    }
+    },
+
+    getDisplayedValues() {
+        if (this.value !== 0) {
+            return {
+                type: CellValueTypes.value,
+                value: this.value
+            }
+        } else if (this.userValue !== 0) {
+            return {
+                type: CellValueTypes.userValue,
+                userValue: this.userValue
+            }
+        } else {
+            return {
+                type: CellValueTypes.inProgress,
+                cornerMarks: this.cornerMarks,
+                centerMarks: this.centerMarks
+            }
+        }
+    },
 }
 
 function insertIntoUniqueSortedArray(arr, item) {

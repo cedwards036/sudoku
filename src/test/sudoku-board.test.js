@@ -1,5 +1,4 @@
 import SudokuBoard from '../core/sudoku-board';
-import CellValueTypes from '../core/cell-value-types';
 
 describe('SudokuBoard', () => {
     it('can create an empty grid of the given dimension', () => {
@@ -302,73 +301,6 @@ describe('SudokuBoard', () => {
                 [4, 6, 7, 1, 3, 9, 8, 2, 5],
             ];
             expect(sudoku.getSolutions()).toEqual([solution]);
-        });
-    });
-
-    describe('getDisplayedCellValues', () => {
-        describe('when the cell has no value or user value', () => {
-            it('returns an object with center and corner pencil marks', () => {
-                const sudoku = SudokuBoard.createEmpty();
-                expect(sudoku.getDisplayedCellValues(0, 0)).toEqual({
-                    type: CellValueTypes.inProgress,
-                    cornerMarks: [],
-                    centerMarks: []
-                });
-                const sudokuWithPencilMarks = sudoku.selectCell(0, 0)
-                                               .addToSelectedCenterMarks(1)
-                                               .addToSelectedCenterMarks(2)
-                                               .addToSelectedCornerMarks(3);
-                expect(sudokuWithPencilMarks.getDisplayedCellValues(0, 0)).toEqual({
-                    type: CellValueTypes.inProgress,
-                    cornerMarks: [3],
-                    centerMarks: [1, 2]
-                });
-            });
-        });
-
-        describe('when the cell has a user value', () => {
-            it('returns an object with the user value', () => {
-                const sudoku = SudokuBoard.createEmpty().selectCell(0, 0).updateSelectedUserValues(3);
-                expect(sudoku.getDisplayedCellValues(0, 0)).toEqual({
-                    type: CellValueTypes.userValue,
-                    userValue: 3
-                });
-            });
-
-            it('supercedes corner/center pencil marks', () => {
-                const sudoku = SudokuBoard.createEmpty().selectCell(0, 0)
-                                                        .addToSelectedCenterMarks(1)
-                                                        .addToSelectedCenterMarks(2)
-                                                        .addToSelectedCornerMarks(3)
-                                                        .updateSelectedUserValues(4);
-                expect(sudoku.getDisplayedCellValues(0, 0)).toEqual({
-                    type: CellValueTypes.userValue,
-                    userValue: 4
-                });
-            });
-        });
-
-        describe('when the cell has a value', () => {
-            it('returns an object with the value', () => {
-                const sudoku = SudokuBoard.createEmpty().selectCell(0, 0).updateSelectedValues(3);
-                expect(sudoku.getDisplayedCellValues(0, 0)).toEqual({
-                    type: CellValueTypes.value,
-                    userValue: 3
-                });
-            });
-            
-            it('supercedes corner/center pencil marks and user values', () => {
-                const sudoku = SudokuBoard.createEmpty().selectCell(0, 0)
-                                                        .addToSelectedCenterMarks(1)
-                                                        .addToSelectedCenterMarks(2)
-                                                        .addToSelectedCornerMarks(3)
-                                                        .updateSelectedUserValues(4)
-                                                        .updateSelectedValues(5);
-                expect(sudoku.getDisplayedCellValues(0, 0)).toEqual({
-                    type: CellValueTypes.value,
-                    userValue: 5
-                });
-            });
         });
     });
 });
