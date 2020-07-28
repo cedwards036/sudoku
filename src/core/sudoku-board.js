@@ -2,6 +2,8 @@ import {produce, immerable} from "immer"
 import {solveClassicSudoku} from "@cedwards036/sudoku-solver";
 
 import SudokuCell from './sudoku-cell';
+import CellValueTypes from './cell-value-types';
+import Cell from "../components/Cell";
 
 export default function SudokuBoard(boardArray) {
     const board = Object.create(SudokuBoard.prototype);
@@ -120,6 +122,27 @@ SudokuBoard.prototype = {
                 cell.removeCenterMark(newMark);
             });
         });
+    },
+
+    getDisplayedCellValues(rowIndex, colIndex) {
+        const cell = this[rowIndex][colIndex];
+        if (cell.value !== 0) {
+            return {
+                type: CellValueTypes.value,
+                userValue: cell.value
+            }
+        } else if (cell.userValue !== 0) {
+            return {
+                type: CellValueTypes.userValue,
+                userValue: cell.userValue
+            }
+        } else {
+            return {
+                type: CellValueTypes.inProgress,
+                cornerMarks: cell.cornerMarks,
+                centerMarks: cell.centerMarks
+            }
+        }
     },
 
     getSolutions() {
