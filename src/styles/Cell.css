@@ -36,6 +36,13 @@
     width: 60px;
 }
 
+.cell-user-value {
+    font-size: var(--cell-value-font-size);
+    text-align: center;
+    width: 60px;
+    color: var(--border-color);
+}
+
 .cell-selected {
     background-color: var(--selected-cell-color);
 }

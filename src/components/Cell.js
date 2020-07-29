@@ -1,6 +1,8 @@
 import React from 'react';
 import '../styles/Cell.css';
+import InProgressCellContents from '../components/InProgressCellContents';
 import {getCellClasses} from '../core/cell-classes';
+import CellValueTypes from '../core/cell-value-types';
 
 export default function Cell(props) {
     const borderClasses = getCellClasses({
@@ -27,6 +29,21 @@ export default function Cell(props) {
         return value;
       }
     }
+
+    function cellContents(cellValueObj) {
+      if (cellValueObj.type === CellValueTypes.value) {
+        return <span className="cell-value">{valueToString(cellValueObj.value)}</span>
+      } else if (cellValueObj.type === CellValueTypes.userValue) {
+        return <span className="cell-user-value">{valueToString(cellValueObj.userValue)}</span>
+      } else if (cellValueObj.type === CellValueTypes.inProgress) {
+        return (
+          <InProgressCellContents 
+            cornerMarks={cellValueObj.cornerMarks}
+            centerMarks={cellValueObj.centerMarks}
+          />
+        )
+      }
+    }
   
     return (
       <div 
@@ -34,7 +51,7 @@ export default function Cell(props) {
         onMouseDown={handleMouseDown}
         onMouseEnter={handleMouseEnter}
       >
-        <span className="cell-value">{valueToString(props.cell.value)}</span>
+        {cellContents(props.cell.getDisplayedValues())}
       </div>
     );
   }
