@@ -37,9 +37,9 @@ export default function EditBoard() {
     });
   }
 
-  function updateSelectedValues(value) {
+  function updateSelectedUserValues(value) {
     updateBoard(draft => {
-      return draft.setCurrentState(board.currentState.updateSelectedValues(value));
+      return draft.setCurrentState(board.currentState.updateSelectedUserValues(value));
     });
   }
 
@@ -138,7 +138,7 @@ export default function EditBoard() {
   }
 
   function handleNumberKeyDown(e) {
-    updateSelectedValues(convertToNumber(e.keyCode));
+    updateSelectedUserValues(convertToNumber(e.keyCode));
   }
 
   function isBackspaceOrDelete(keyCode) {
@@ -146,7 +146,7 @@ export default function EditBoard() {
   }
 
   function handleCellDeletion() {
-    updateSelectedValues(0);
+    updateSelectedUserValues(0);
   }
 
   function isUndoCommand(e) {
@@ -202,7 +202,7 @@ export default function EditBoard() {
         setIsSelecting={setIsSelecting}
       />
       <ControlBoard 
-        handleNumberClick={updateSelectedValues}
+        handleNumberClick={updateSelectedUserValues}
         handleDeleteClick={handleCellDeletion}
         handleUndoClick={undo}
         handleRedoClick={redo}
