@@ -8,7 +8,7 @@ import {encodeBoard, decodeBoard} from '../core/sudoku-board-encoding'
 import HelpButton from './HelpButton';
 import CreationPuzzleFeedback from './CreationPuzzleFeedback';
 import Grid from './Grid';
-import ControlBoard from './ControlBoard';
+import EditControlBoard from './EditControlBoard';
 import KeyboardShortcutTable from './KeyboardShortcutTable';
 
 const LEFT_ARROW = 37;
@@ -201,7 +201,7 @@ export default function EditBoard() {
         handleCellMouseEnter={handleCellMouseEnter}
         setIsSelecting={setIsSelecting}
       />
-      <ControlBoard 
+      <EditControlBoard 
         handleNumberClick={updateSelectedValues}
         handleDeleteClick={handleCellDeletion}
         handleUndoClick={undo}

@@ -3,7 +3,7 @@ import '../styles/ControlBoard.css';
 import ControlButton from './ControlButton';
 import SolveButton from './SolveButton';
 
-export default function ControlBoard(props) {
+export default function SolveControlBoard(props) {
     const numberButtons = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => {
         const handleClick = (e) => {props.handleNumberClick(num)};
         return <ControlButton 
