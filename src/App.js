@@ -7,7 +7,7 @@ import {
 import './styles/App.css';
 import Header from './components/Header';
 import HomePage from './components/HomePage';
-import Game from './components/Game';
+import EditBoard from './components/EditBoard';
 import Footer from './components/Footer';
 
 function App() {
@@ -16,8 +16,8 @@ function App() {
       <div className="App">
         <Header/>
         <Switch>
-          <Route path="/edit/:boardEncoding" children={<Game/>}/>
-          <Route path="/solve/:boardEncoding" children={<Game/>}/>
+          <Route path="/edit/:boardEncoding" children={<EditBoard/>}/>
+          <Route path="/solve/:boardEncoding" children={<EditBoard/>}/>
           <Route path="/"><HomePage/></Route>
         </Switch>
         <Footer/>

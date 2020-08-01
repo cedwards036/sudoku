@@ -18,7 +18,7 @@ const DOWN_ARROW = 40;
 
 Modal.setAppElement('#root')
 
-export default function Game() {
+export default function EditBoard() {
   const {boardEncoding} = useParams();
   const history = useHistory();
   const [board, updateBoard] = useImmer(History(decodeBoard(boardEncoding).selectCell(0, 0)));
@@ -192,7 +192,7 @@ export default function Game() {
   }
 
   return (
-    <div className="game">
+    <div className="board">
       <HelpButton handleClick={openModal}/>
       <CreationPuzzleFeedback solutionCount={getSolutionsCount()}/>
       <Grid 
