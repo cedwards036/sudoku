@@ -132,6 +132,27 @@ SudokuBoard.prototype = {
 
     cellExists(rowIndex, colIndex) {
         return this[rowIndex] != null && this[rowIndex][colIndex] != null;
+    },
+
+    getIncorrectCells() {
+        const result = [];
+        const solutions = this.getSolutions();
+        if (solutions.length > 0) {
+            const solution = solutions[0];
+            this.forEachRow((row, rowIndex) => {
+                row.forEach((cell, colIndex) => {
+                    if (cell.value === 0 && cell.userValue !== solution[rowIndex][colIndex]) {
+                        result.push({
+                            rowIndex: rowIndex,
+                            colIndex: colIndex,
+                            expectedValue: solution[rowIndex][colIndex],
+                            currentValue: cell.userValue
+                        });
+                    }
+                });
+            });
+        }
+        return result;
     }
 }
 
