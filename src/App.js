@@ -8,6 +8,7 @@ import './styles/App.css';
 import Header from './components/Header';
 import HomePage from './components/HomePage';
 import EditBoard from './components/EditBoard';
+import SolveBoard from './components/SolveBoard';
 import Footer from './components/Footer';
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
         <Header/>
         <Switch>
           <Route path="/edit/:boardEncoding" children={<EditBoard/>}/>
-          <Route path="/solve/:boardEncoding" children={<EditBoard/>}/>
+          <Route path="/solve/:boardEncoding" children={<SolveBoard/>}/>
           <Route path="/"><HomePage/></Route>
         </Switch>
         <Footer/>
