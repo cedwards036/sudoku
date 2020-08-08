@@ -200,6 +200,7 @@ export default function EditBoard() {
         handleSelection={handleSelection}
         handleCellMouseEnter={handleCellMouseEnter}
         setIsSelecting={setIsSelecting}
+        incorrectCells={board.currentState.getIncorrectCells()}
       />
       <SolveControlBoard 
         handleNumberClick={updateSelectedUserValues}

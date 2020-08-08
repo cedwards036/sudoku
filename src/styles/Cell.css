@@ -12,6 +12,7 @@
     user-select: none; 
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .cell-thick-upper-border {
@@ -40,10 +41,20 @@
     font-size: var(--cell-value-font-size);
     text-align: center;
     width: 60px;
-    color: var(--border-color);
+    color: var(--primary-color);
 }
 
 .cell-selected {
     background-color: var(--selected-cell-color);
+}
+
+.cell-incorrect .cell-user-value {
+    color: var(--warning-color);
+}
+
+.cell-color-layer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }
   

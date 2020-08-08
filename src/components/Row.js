@@ -14,6 +14,7 @@ export default function Row(props) {
             handleSelection={props.handleSelection}
             handleCellMouseEnter={props.handleCellMouseEnter}
             setIsSelecting={props.setIsSelecting}
+            isIncorrect={props.incorrectCells.includes(index)}
           />
         )}
       </div>
