@@ -12,6 +12,7 @@ export default function SudokuBoard(boardArray) {
     board.topSelectedRowIndex = -1;
     board.topSelectedColIndex = -1;
     board.hasSelection = false;
+    board.solutions = getSolutions(board);
     return board;
 }
 
@@ -79,6 +80,7 @@ SudokuBoard.prototype = {
             draft.forEachSelected(cell => {
                 cell.value = newValue;
             });
+            draft.solutions = getSolutions(draft);
         });
     },
 
@@ -123,7 +125,7 @@ SudokuBoard.prototype = {
     },
 
     getSolutions() {
-        return solveClassicSudoku(this.toValuesArray());
+        return this.solutions;
     },
 
     toValuesArray() {
@@ -136,9 +138,8 @@ SudokuBoard.prototype = {
 
     getIncorrectCells() {
         const result = [];
-        const solutions = this.getSolutions();
-        if (solutions.length > 0) {
-            const solution = solutions[0];
+        if (this.solutions.length > 0) {
+            const solution = this.solutions[0];
             this.forEachRow((row, rowIndex) => {
                 row.forEach((cell, colIndex) => {
                     if (cell.value === 0 && cell.userValue !== solution[rowIndex][colIndex]) {
@@ -154,6 +155,11 @@ SudokuBoard.prototype = {
         }
         return result;
     }
+}
+
+
+function getSolutions(board) {
+    return solveClassicSudoku(board.toValuesArray());
 }
 
 function range(n) {
