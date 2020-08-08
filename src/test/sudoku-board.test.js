@@ -276,7 +276,7 @@ describe('SudokuBoard', () => {
         });
     });
 
-    describe('getSolutions', () => {
+    describe('solutions', () => {
         it('returns an array of the first 2 (or fewer) solutions to the puzzle', () => {
             const sudoku = SudokuBoard([
                 [6, 0, 0, 7, 0, 8, 0, 0, 4],
@@ -300,7 +300,7 @@ describe('SudokuBoard', () => {
                 [3, 5, 1, 8, 7, 2, 6, 4, 9],
                 [4, 6, 7, 1, 3, 9, 8, 2, 5],
             ];
-            expect(sudoku.getSolutions()).toEqual([solution]);
+            expect(sudoku.solutions).toEqual([solution]);
         });
     });
 

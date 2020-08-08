@@ -188,7 +188,7 @@ export default function EditBoard() {
   });
 
   function getSolutionsCount() {
-    return board.currentState.getSolutions().length;
+    return board.currentState.solutions.length;
   }
 
   return (
