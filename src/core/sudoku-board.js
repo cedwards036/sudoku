@@ -137,18 +137,16 @@ SudokuBoard.prototype = {
     },
 
     getIncorrectCells() {
-        const result = [];
+        const result = {};
         if (this.solutions.length > 0) {
             const solution = this.solutions[0];
             this.forEachRow((row, rowIndex) => {
                 row.forEach((cell, colIndex) => {
                     if (cell.value === 0 && cell.userValue !== solution[rowIndex][colIndex]) {
-                        result.push({
-                            rowIndex: rowIndex,
-                            colIndex: colIndex,
-                            expectedValue: solution[rowIndex][colIndex],
-                            currentValue: cell.userValue
-                        });
+                        if (!result.hasOwnProperty(rowIndex)) {
+                            result[rowIndex] = [];
+                        }
+                        result[rowIndex].push(colIndex);
                     }
                 });
             });

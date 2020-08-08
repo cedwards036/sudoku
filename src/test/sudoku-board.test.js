@@ -313,7 +313,7 @@ describe('SudokuBoard', () => {
                 [1, 0, 3, 2]
             ]).selectCell(2, 0).updateSelectedUserValues(3).clearAllSelections()
               .selectCell(3, 1).updateSelectedUserValues(4);
-            expect(sudoku.getIncorrectCells()).toEqual([]);
+            expect(sudoku.getIncorrectCells()).toEqual({});
         });
 
         it('returns an empty array if the board has no solution', () => {
@@ -323,7 +323,7 @@ describe('SudokuBoard', () => {
                 [0, 2, 3, 4],
                 [1, 0, 3, 2]
             ]);
-            expect(sudoku.getIncorrectCells()).toEqual([]);
+            expect(sudoku.getIncorrectCells()).toEqual({});
         });
 
         it('returns an array of objects detailing the coordinates, expected value, and current value of incorrect cells', () => {
@@ -334,11 +334,10 @@ describe('SudokuBoard', () => {
                 [1, 0, 3, 0]
             ]).selectCell(2, 0).updateSelectedUserValues(2).clearAllSelections()
               .selectCell(3, 1).updateSelectedUserValues(1);
-            expect(sudoku.getIncorrectCells()).toEqual([
-                {rowIndex: 2, colIndex: 0, expectedValue: 3, currentValue: 2},
-                {rowIndex: 3, colIndex: 1, expectedValue: 4, currentValue: 1},
-                {rowIndex: 3, colIndex: 3, expectedValue: 2, currentValue: 0}
-            ]);
+            expect(sudoku.getIncorrectCells()).toEqual({
+                2: [0],
+                3: [1, 3]
+            });
         });
     });
 });
