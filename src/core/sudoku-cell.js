@@ -29,6 +29,11 @@ SudokuCell.prototype = {
         removeFromArray(this.cornerMarks, mark);
     },
 
+    deleteInProgressMarks() {
+        this.cornerMarks = [];
+        this.centerMarks = [];
+    },
+
     getDisplayedValues() {
         if (this.value !== 0) {
             return {

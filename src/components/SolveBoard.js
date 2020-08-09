@@ -24,6 +24,7 @@ export default function EditBoard() {
   const [board, updateBoard] = useImmer(History(decodeBoard(boardEncoding).selectCell(0, 0)));
   const [isSelecting, setIsSelecting] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [enterMode, setEnterMode] = useState('userValue');
   const stopSelecting = () => setIsSelecting(false);
   function startNewCellSelection(rowIndex, colIndex) {
     updateBoard(draft => {
@@ -37,9 +38,49 @@ export default function EditBoard() {
     });
   }
 
+  function updateCellContents(value) {
+    if (enterMode === 'userValue') {
+      updateSelectedUserValues(value);
+    } else if (enterMode === 'cornerMark') {
+      updateSelectedCornerMarks(value);
+    } else if (enterMode === 'centerMark') {
+      updateSelectedCenterMarks(value);
+    }
+  }
+
+  function switchToUserValues() {
+    setEnterMode('userValue');
+  }
+
   function updateSelectedUserValues(value) {
     updateBoard(draft => {
-      return draft.setCurrentState(board.currentState.updateSelectedUserValues(value));
+      return draft.setCurrentState(draft.currentState.updateSelectedUserValues(value));
+    });
+  }
+
+  function switchToCornerMarks() {
+    setEnterMode('cornerMark');
+  }
+
+  function updateSelectedCornerMarks(value) {
+    updateBoard(draft => {
+      return draft.setCurrentState(draft.currentState.addToSelectedCornerMarks(value));
+    });
+  }
+
+  function switchToCenterMarks() {
+    setEnterMode('centerMark');
+  }
+
+  function updateSelectedCenterMarks(value) {
+    updateBoard(draft => {
+      return draft.setCurrentState(draft.currentState.addToSelectedCenterMarks(value));
+    });
+  }  
+
+  function deleteSelectedInProgressMarks() {
+    updateBoard(draft => {
+      return draft.setCurrentState(draft.currentState.deleteSelectedInProgressMarks());
     });
   }
 
@@ -90,6 +131,12 @@ export default function EditBoard() {
       } else if (isSelectAllCommand(e)) {
         e.preventDefault();
         selectAll();
+      } else if (isSwitchToUserValuesCommand(e)) {
+        switchToUserValues();
+      } else if (isSwitchToCornerMarksCommand(e)) {
+        switchToCornerMarks();
+      } else if (isSwitchToCenterMarksCommand(e)) {
+        switchToCenterMarks();
       }
     }
   }
@@ -138,7 +185,7 @@ export default function EditBoard() {
   }
 
   function handleNumberKeyDown(e) {
-    updateSelectedUserValues(convertToNumber(e.keyCode));
+    updateCellContents(convertToNumber(e.keyCode));
   }
 
   function isBackspaceOrDelete(keyCode) {
@@ -146,7 +193,11 @@ export default function EditBoard() {
   }
 
   function handleCellDeletion() {
-    updateSelectedUserValues(0);
+    if (enterMode === 'userValue') {
+      updateCellContents(0);
+    } else {
+      deleteSelectedInProgressMarks();
+    }
   }
 
   function isUndoCommand(e) {
@@ -159,6 +210,18 @@ export default function EditBoard() {
 
   function isSelectAllCommand(e) {
     return e.keyCode === 65 && e.ctrlKey;
+  }
+
+  function isSwitchToUserValuesCommand(e) {
+    return e.keyCode === 90 && !e.ctrlKey;
+  }
+
+  function isSwitchToCornerMarksCommand(e) {
+    return e.keyCode === 88 && !e.ctrlKey;
+  }
+
+  function isSwitchToCenterMarksCommand(e) {
+    return e.keyCode === 67 && !e.ctrlKey;
   }
 
   function openModal() {
@@ -203,7 +266,7 @@ export default function EditBoard() {
         incorrectCells={board.currentState.getIncorrectCells()}
       />
       <SolveControlBoard 
-        handleNumberClick={updateSelectedUserValues}
+        handleNumberClick={updateCellContents}
         handleDeleteClick={handleCellDeletion}
         handleUndoClick={undo}
         handleRedoClick={redo}
