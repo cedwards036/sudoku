@@ -6,7 +6,7 @@ import '../styles/Modal.css';
 import History from '../core/history';
 import {encodeBoard, decodeBoard} from '../core/sudoku-board-encoding'
 import HelpButton from './HelpButton';
-import CreationPuzzleFeedback from './CreationPuzzleFeedback';
+import SolvePuzzleFeedback from './SolvePuzzleFeedback';
 import Grid from './Grid';
 import SolveControlBoard from './SolveControlBoard';
 import KeyboardShortcutTable from './KeyboardShortcutTable';
@@ -194,7 +194,7 @@ export default function EditBoard() {
   return (
     <div className="board">
       <HelpButton handleClick={openModal}/>
-      <CreationPuzzleFeedback solutionCount={getSolutionsCount()}/>
+      <SolvePuzzleFeedback incorrectCells={board.currentState.getIncorrectCells()}/>
       <Grid 
         board={board.currentState}
         handleSelection={handleSelection}

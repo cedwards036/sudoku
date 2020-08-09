@@ -11,6 +11,7 @@
     --background-color: #121212;
     --selected-cell-color: rgba(1, 135, 134, 0.6);
     --warning-color: #cf6679;
+    --secondary-color: #BB86FC;
     --primary-color: #03dac6;
     --modal-overlay-color: rgba(50, 50, 50, 0.7);
 }
