@@ -4,7 +4,13 @@ import '../styles/CreationPuzzleFeedback.css';
 export default function CreationPuzzleFeedback(props) {
     let feedbackText;
     let feedbackClass;
-    if (Object.keys(props.incorrectCells).length === 0) {
+    if (props.solutionCount === 0) {
+      feedbackText = 'Warning: This puzzle has no solution :(';
+      feedbackClass = 'puzzle-feedback-bad';
+    } else if (props.solutionCount > 1) {
+      feedbackText = 'Warning: This puzzle has more than one solution :(';
+      feedbackClass = 'puzzle-feedback-bad';
+    } else if (Object.keys(props.incorrectCells).length === 0) {
       feedbackText = 'Puzzle solved! :)';
       feedbackClass = 'puzzle-feedback-good';
     } else {

@@ -257,7 +257,10 @@ export default function EditBoard() {
   return (
     <div className="board">
       <HelpButton handleClick={openModal}/>
-      <SolvePuzzleFeedback incorrectCells={board.currentState.getIncorrectCells()}/>
+      <SolvePuzzleFeedback 
+        solutionCount={board.currentState.solutions.length}
+        incorrectCells={board.currentState.getIncorrectCells()}
+      />
       <Grid 
         board={board.currentState}
         handleSelection={handleSelection}
