@@ -276,6 +276,33 @@ describe('SudokuBoard', () => {
         });
     });
 
+    describe('deleteSelectedInProgressMarks', () => {
+        it('does nothing if no cells are selected', () => {
+            const sudoku = SudokuBoard.createEmpty();
+            expect(sudoku).toEqual(sudoku.deleteSelectedInProgressMarks());
+        });
+        
+        it('removes all center and corner marks from selected cells', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .selectCell(1, 4)
+                                        .selectCell(3, 1)
+                                        .addToSelectedCenterMarks(7)
+                                        .addToSelectedCornerMarks(2)
+                                        .addToSelectedCornerMarks(3)
+                                        .deleteSelectedInProgressMarks();
+            expect(sudoku[0][0].centerMarks).not.toContain(7);
+            expect(sudoku[0][0].cornerMarks).not.toContain(2);
+            expect(sudoku[0][0].cornerMarks).not.toContain(3);
+            expect(sudoku[1][4].centerMarks).not.toContain(7);
+            expect(sudoku[1][4].cornerMarks).not.toContain(2);
+            expect(sudoku[1][4].cornerMarks).not.toContain(3);
+            expect(sudoku[3][1].centerMarks).not.toContain(7);
+            expect(sudoku[3][1].cornerMarks).not.toContain(2);
+            expect(sudoku[3][1].cornerMarks).not.toContain(3);
+        });
+    });
+
     describe('solutions', () => {
         it('returns an array of the first 2 (or fewer) solutions to the puzzle', () => {
             const sudoku = SudokuBoard([

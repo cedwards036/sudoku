@@ -124,6 +124,14 @@ SudokuBoard.prototype = {
         });
     },
 
+    deleteSelectedInProgressMarks() {
+        return produce(this, draft => {
+            draft.forEachSelected(cell => {
+                cell.deleteInProgressMarks();
+            });
+        });
+    },
+
     getSolutions() {
         return this.solutions;
     },
