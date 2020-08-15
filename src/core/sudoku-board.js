@@ -13,6 +13,7 @@ export default function SudokuBoard(boardArray) {
     board.topSelectedColIndex = -1;
     board.hasSelection = false;
     board.solutions = getSolutions(board);
+    board.selectedCount = 0;
     return board;
 }
 
@@ -51,6 +52,7 @@ SudokuBoard.prototype = {
                 draft.topSelectedRowIndex = rowIndex;
                 draft.topSelectedColIndex = colIndex;
                 draft.hasSelection = true;
+                draft.selectedCount += 1;
             });
         } else {
             return this;
@@ -63,6 +65,7 @@ SudokuBoard.prototype = {
             draft.topSelectedRowIndex = 0;
             draft.topSelectedColIndex = 0;
             draft.hasSelection = true;
+            draft.selectedCount = draft.size ** 2;
         });
     },
 
@@ -72,6 +75,7 @@ SudokuBoard.prototype = {
             draft.topSelectedRowIndex = -1;
             draft.topSelectedColIndex = -1;
             draft.hasSelection = false;
+            draft.selectedCount = 0;
         });
     },
 

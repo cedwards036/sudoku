@@ -60,6 +60,11 @@ describe('SudokuBoard', () => {
             expect(sudoku.hasSelection).toEqual(true);
         });
 
+        it('adds one to the selected count', () => {
+            const sudoku = SudokuBoard.createEmpty(9).selectCell(3, 4);
+            expect(sudoku.selectedCount).toEqual(1);
+        });
+
         it('does nothing if the cell does not exist', () => {
             const sudoku = SudokuBoard.createEmpty(4);
             expect(sudoku).toEqual(sudoku.selectCell(13, 45));
@@ -91,6 +96,11 @@ describe('SudokuBoard', () => {
             const sudoku = SudokuBoard.createEmpty(4).selectAllCells();
             expect(sudoku.hasSelection).toEqual(true);
         });
+
+        it('sets the selected count to the total number of cells in the grid', () => {
+            const sudoku = SudokuBoard.createEmpty(4).selectAllCells();
+            expect(sudoku.selectedCount).toEqual(16);
+        });
     });
 
     describe('clearAllSelections', () => {
@@ -117,6 +127,11 @@ describe('SudokuBoard', () => {
         it('updates the hasSelection flag', () => {
             const sudoku = SudokuBoard.createEmpty(9).selectCell(3, 4).clearAllSelections();
             expect(sudoku.hasSelection).toEqual(false);
+        });
+
+        it('sets the selected count to 0', () => {
+            const sudoku = SudokuBoard.createEmpty(9).selectCell(3, 4).clearAllSelections();
+            expect(sudoku.selectedCount).toEqual(0);
         });
     });
 
