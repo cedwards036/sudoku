@@ -276,30 +276,34 @@ describe('SudokuBoard', () => {
         });
     });
 
-    describe('deleteSelectedInProgressMarks', () => {
+    describe('deleteFromSelectedCells', () => {
         it('does nothing if no cells are selected', () => {
             const sudoku = SudokuBoard.createEmpty();
-            expect(sudoku).toEqual(sudoku.deleteSelectedInProgressMarks());
+            expect(sudoku).toEqual(sudoku.deleteFromSelectedCells());
         });
         
-        it('removes all center and corner marks from selected cells', () => {
+        it('only removes user values from cells with user values', () => {
             const sudoku = SudokuBoard.createEmpty()
                                         .selectCell(0, 0)
-                                        .selectCell(1, 4)
-                                        .selectCell(3, 1)
+                                        .addToSelectedCenterMarks(7)
+                                        .addToSelectedCornerMarks(2)
+                                        .updateSelectedUserValues(3)
+                                        .deleteFromSelectedCells();
+            expect(sudoku[0][0].centerMarks).toContain(7);
+            expect(sudoku[0][0].cornerMarks).toContain(2);
+            expect(sudoku[0][0].userValue).toEqual(0);
+        });
+
+        it('removes pencil marks from cells without user values', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
                                         .addToSelectedCenterMarks(7)
                                         .addToSelectedCornerMarks(2)
                                         .addToSelectedCornerMarks(3)
-                                        .deleteSelectedInProgressMarks();
+                                        .deleteFromSelectedCells();
             expect(sudoku[0][0].centerMarks).not.toContain(7);
             expect(sudoku[0][0].cornerMarks).not.toContain(2);
             expect(sudoku[0][0].cornerMarks).not.toContain(3);
-            expect(sudoku[1][4].centerMarks).not.toContain(7);
-            expect(sudoku[1][4].cornerMarks).not.toContain(2);
-            expect(sudoku[1][4].cornerMarks).not.toContain(3);
-            expect(sudoku[3][1].centerMarks).not.toContain(7);
-            expect(sudoku[3][1].cornerMarks).not.toContain(2);
-            expect(sudoku[3][1].cornerMarks).not.toContain(3);
         });
     });
 

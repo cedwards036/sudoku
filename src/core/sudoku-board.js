@@ -124,10 +124,14 @@ SudokuBoard.prototype = {
         });
     },
 
-    deleteSelectedInProgressMarks() {
+    deleteFromSelectedCells() {
         return produce(this, draft => {
             draft.forEachSelected(cell => {
-                cell.deleteInProgressMarks();
+                if (cell.userValue !== 0) {
+                    cell.userValue = 0;
+                } else {
+                    cell.deleteInProgressMarks();
+                }
             });
         });
     },

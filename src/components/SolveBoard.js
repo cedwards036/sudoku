@@ -79,9 +79,9 @@ export default function EditBoard() {
     });
   }  
 
-  function deleteSelectedInProgressMarks() {
+  function deleteFromSelectedCells() {
     updateBoard(draft => {
-      return draft.setCurrentState(draft.currentState.deleteSelectedInProgressMarks());
+      return draft.setCurrentState(draft.currentState.deleteFromSelectedCells());
     });
   }
 
@@ -194,11 +194,7 @@ export default function EditBoard() {
   }
 
   function handleCellDeletion() {
-    if (enterMode === 'userValue') {
-      updateCellContents(0);
-    } else {
-      deleteSelectedInProgressMarks();
-    }
+    deleteFromSelectedCells();
   }
 
   function isUndoCommand(e) {
