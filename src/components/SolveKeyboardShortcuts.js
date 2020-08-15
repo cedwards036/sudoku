@@ -4,7 +4,7 @@ export default function SolveKeyboardShortcuts() {
     return (
         <React.Fragment>
             <tr>
-                <td>Switch to big number entry</td>
+                <td>Switch to normal entry</td>
                 <td><kbd>z</kbd></td>
             </tr>
             <tr>
