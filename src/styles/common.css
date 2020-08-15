@@ -1,6 +1,6 @@
 :root {
     --cell-size: 8vw;
-    --max-cell-size: 60px;
+    --max-cell-size: 54px;
     --light-border-width: 1px;
     --light-border: solid var(--light-border-width) var(--border-color);
     --heavy-border-width: 3px;
