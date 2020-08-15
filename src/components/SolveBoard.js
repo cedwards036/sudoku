@@ -274,6 +274,10 @@ export default function EditBoard() {
         handleDeleteClick={handleCellDeletion}
         handleUndoClick={undo}
         handleRedoClick={redo}
+        enterMode={enterMode}
+        handleNormalClick={switchToUserValues}
+        handleCornerClick={switchToCornerMarks}
+        handleCenterClick={switchToCenterMarks}
         solveURL={`/solve/${encodeBoard(board.currentState)}`}
         canUndo={board.past.length > 0}
         canRedo={board.future.length > 0}

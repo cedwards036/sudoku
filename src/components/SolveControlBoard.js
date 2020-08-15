@@ -41,6 +41,29 @@ export default function SolveControlBoard(props) {
                 {numberButtons}
             </div>
             <div className="control-row">
+                <ControlButton 
+                    handleClick={props.handleNormalClick} 
+                    disabled={false} 
+                    highlighted={props.enterMode === "userValue"}
+                >
+                    Normal
+                </ControlButton>
+                <ControlButton 
+                    handleClick={props.handleCornerClick} 
+                    disabled={false} 
+                    highlighted={props.enterMode === "cornerMark"}
+                >
+                    Corner
+                </ControlButton>
+                <ControlButton 
+                    handleClick={props.handleCenterClick} 
+                    disabled={false} 
+                    highlighted={props.enterMode === "centerMark"}
+                >
+                    Center
+                </ControlButton>
+            </div>
+            <div className="control-row">
                 <ControlButton handleClick={props.handleDeleteClick} disabled={false}>Delete</ControlButton>
                 <ControlButton handleClick={props.handleUndoClick} disabled={!props.canUndo}>Undo</ControlButton>
                 <ControlButton handleClick={props.handleRedoClick} disabled={!props.canRedo}>Redo</ControlButton>

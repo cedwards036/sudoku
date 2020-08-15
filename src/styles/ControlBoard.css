@@ -21,3 +21,8 @@
     width: 100%; 
 }
 
+.button-highlighted {
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
