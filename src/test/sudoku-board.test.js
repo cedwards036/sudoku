@@ -371,5 +371,103 @@ describe('SudokuBoard', () => {
             });
         });
     });
+
+    describe('highlightCellsWithValue', () => {
+        it('does nothing if no cells have the given value', () => {
+            const sudoku = SudokuBoard.createEmpty();
+            expect(sudoku).toEqual(sudoku.highlightCellsWithValue(1));
+        });
+
+        it('highlights all cells with a matching value', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                      .selectCell(0, 0)
+                                      .selectCell(2, 3)
+                                      .updateSelectedValues(2)
+                                      .highlightCellsWithValue(2);
+            expect(sudoku[0][0].isHighlighted).toBe(true);
+            expect(sudoku[2][3].isHighlighted).toBe(true);
+        });
+
+        it('highlights all cells with a matching user value', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                      .selectCell(0, 0)
+                                      .selectCell(2, 3)
+                                      .updateSelectedUserValues(2)
+                                      .highlightCellsWithValue(2);
+            expect(sudoku[0][0].isHighlighted).toBe(true);
+            expect(sudoku[2][3].isHighlighted).toBe(true);
+        });
+
+        it('highlights all cells with a matching corner mark', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                      .selectCell(0, 0)
+                                      .selectCell(2, 3)
+                                      .addToSelectedCornerMarks(2)
+                                      .highlightCellsWithValue(2);
+            expect(sudoku[0][0].isHighlighted).toBe(true);
+            expect(sudoku[2][3].isHighlighted).toBe(true);
+        });
+
+        it('highlights all cells with a matching center mark', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                      .selectCell(0, 0)
+                                      .selectCell(2, 3)
+                                      .addToSelectedCenterMarks(2)
+                                      .highlightCellsWithValue(2);
+            expect(sudoku[0][0].isHighlighted).toBe(true);
+            expect(sudoku[2][3].isHighlighted).toBe(true);
+        });
+    });
+
+    describe('unhighlightCellsWithValue', () => {
+        it('does nothing if no cells have the given value', () => {
+            const sudoku = SudokuBoard.createEmpty();
+            expect(sudoku).toEqual(sudoku.unhighlightCellsWithValue(1));
+        });
+
+        it('unhighlights all cells with a matching value', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                      .selectCell(0, 0)
+                                      .selectCell(2, 3)
+                                      .updateSelectedValues(2)
+                                      .highlightCellsWithValue(2)
+                                      .unhighlightCellsWithValue(2);
+            expect(sudoku[0][0].isHighlighted).toBe(false);
+            expect(sudoku[2][3].isHighlighted).toBe(false);
+        });
+
+        it('unhighlights all cells with a matching user value', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                      .selectCell(0, 0)
+                                      .selectCell(2, 3)
+                                      .updateSelectedUserValues(2)
+                                      .highlightCellsWithValue(2)
+                                      .unhighlightCellsWithValue(2);
+            expect(sudoku[0][0].isHighlighted).toBe(false);
+            expect(sudoku[2][3].isHighlighted).toBe(false);
+        });
+
+        it('unhighlights all cells with a matching corner mark', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                      .selectCell(0, 0)
+                                      .selectCell(2, 3)
+                                      .addToSelectedCornerMarks(2)
+                                      .highlightCellsWithValue(2)
+                                      .unhighlightCellsWithValue(2);
+            expect(sudoku[0][0].isHighlighted).toBe(false);
+            expect(sudoku[2][3].isHighlighted).toBe(false);
+        });
+
+        it('unhighlights all cells with a matching center mark', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                      .selectCell(0, 0)
+                                      .selectCell(2, 3)
+                                      .addToSelectedCenterMarks(2)
+                                      .highlightCellsWithValue(2)
+                                      .unhighlightCellsWithValue(2);
+            expect(sudoku[0][0].isHighlighted).toBe(false);
+            expect(sudoku[2][3].isHighlighted).toBe(false);
+        });
+    });
 });
 

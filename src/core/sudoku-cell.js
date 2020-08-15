@@ -6,6 +6,7 @@ export default function SudokuCell(value = 0, userValue = 0) {
     cell.value = value;
     cell.userValue = userValue;
     cell.isSelected = false;
+    cell.isHighlighted = false;
     cell.cornerMarks = [];
     cell.centerMarks = [];
     return cell;
@@ -53,6 +54,13 @@ SudokuCell.prototype = {
             }
         }
     },
+
+    hasValueInSomeWay(value) {
+        return this.value === value ||
+               this.userValue === value || 
+               this.cornerMarks.includes(value) || 
+               this.centerMarks.includes(value);
+    }
 }
 
 function insertIntoUniqueSortedArray(arr, item) {
