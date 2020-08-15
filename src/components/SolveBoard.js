@@ -10,6 +10,7 @@ import SolvePuzzleFeedback from './SolvePuzzleFeedback';
 import Grid from './Grid';
 import SolveControlBoard from './SolveControlBoard';
 import KeyboardShortcutTable from './KeyboardShortcutTable';
+import SolveKeyboardShortcuts from './SolveKeyboardShortcuts';
 
 const LEFT_ARROW = 37;
 const UP_ARROW = 38;
@@ -286,7 +287,9 @@ export default function EditBoard() {
         overlayClassName="modal-overlay"
         closeTimeoutMS={300}
       >
-        <KeyboardShortcutTable/>
+        <KeyboardShortcutTable>
+          <SolveKeyboardShortcuts/>
+        </KeyboardShortcutTable> 
       </Modal>
     </div>
   )
