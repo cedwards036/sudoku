@@ -71,7 +71,11 @@ export default function EditBoard() {
 
   function updateSelectedUserValues(value) {
     updateBoard(draft => {
-      return draft.setCurrentState(draft.currentState.updateSelectedUserValues(value));
+      draft = draft.setCurrentState(draft.currentState.updateSelectedUserValues(value));
+      if (draft.currentState.selectedCount === 1) {
+        draft.currentState = draft.currentState.unhighlightAllCells().highlightCellsWithValue(value);
+      }
+      return draft;
     });
   }
 
