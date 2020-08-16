@@ -14,6 +14,7 @@ export default function SudokuBoard(boardArray) {
     board.hasSelection = false;
     board.solutions = getSolutions(board);
     board.selectedCount = 0;
+    board.userValueSuccessfullyWritten = false;
     return board;
 }
 
@@ -90,9 +91,18 @@ SudokuBoard.prototype = {
 
     updateSelectedUserValues(newUserValue) {
         return produce(this, draft => {
+            let updatedCount = 0;
             draft.forEachSelected(cell => {
-                cell.userValue = newUserValue;
+                if (cell.value === 0) {
+                    cell.userValue = newUserValue;
+                    updatedCount += 1;
+                }
             });
+            if (updatedCount > 0) {
+                draft.userValueSuccessfullyWritten = true;
+            } else {
+                draft.userValueSuccessfullyWritten = false;
+            }
         });
     },
 
@@ -173,7 +183,7 @@ SudokuBoard.prototype = {
     highlightCellsWithValue(value) {
         return produce(this, draft => {
             draft.forEachRow(row => row.forEach(cell => {
-                if (cell.hasValueInSomeWay(value)) {
+                if (cell.hasVisibleValue(value)) {
                     cell.isHighlighted = true;
                 }
             }));

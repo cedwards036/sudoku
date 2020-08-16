@@ -55,11 +55,16 @@ SudokuCell.prototype = {
         }
     },
 
-    hasValueInSomeWay(value) {
-        return this.value === value ||
-               this.userValue === value || 
-               this.cornerMarks.includes(value) || 
-               this.centerMarks.includes(value);
+    hasVisibleValue(value) {
+        const displayedValues = this.getDisplayedValues();
+        if (displayedValues.type === CellValueTypes.value) {
+            return this.value === value;
+        } else if (displayedValues.type === CellValueTypes.userValue) {
+            return this.userValue === value;
+        } else {
+            return this.cornerMarks.includes(value) || this.centerMarks.includes(value);
+        }
+               
     }
 }
 

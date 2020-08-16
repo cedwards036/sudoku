@@ -169,6 +169,14 @@ describe('SudokuBoard', () => {
             expect(sudoku[1][4].userValue).toEqual(3);
             expect(sudoku[3][1].userValue).toEqual(3);
         });
+        
+        it('does not update user values of cells with existing given values', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .updateSelectedValues(2)
+                                        .updateSelectedUserValues(3);
+            expect(sudoku[0][0].userValue).toEqual(0);
+        });
     });
 
     describe('addToSelectedCornerMarks', () => {
@@ -431,6 +439,20 @@ describe('SudokuBoard', () => {
                                       .highlightCellsWithValue(2);
             expect(sudoku[0][0].isHighlighted).toBe(true);
             expect(sudoku[2][3].isHighlighted).toBe(true);
+        });
+
+        it('does not highlight cells where the matching value is present but not visible', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                      .selectCell(0, 0)
+                                      .addToSelectedCenterMarks(2).updateSelectedUserValues(3).clearAllSelections()
+                                      .selectCell(2, 3)
+                                      .addToSelectedCornerMarks(2).updateSelectedUserValues(3).clearAllSelections()
+                                      .selectCell(3, 7)
+                                      .updateSelectedUserValues(2).updateSelectedValues(3).clearAllSelections()
+                                      .highlightCellsWithValue(2);
+            expect(sudoku[0][0].isHighlighted).toBe(false);
+            expect(sudoku[2][3].isHighlighted).toBe(false);
+            expect(sudoku[3][7].isHighlighted).toBe(false);
         });
     });
 
