@@ -42,8 +42,4 @@ BoardState.prototype = {
             }
         });
     },
-
-    getCurrentState() {
-        return this.past[this.past.length - 1];
-    }
 }
