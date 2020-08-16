@@ -434,52 +434,19 @@ describe('SudokuBoard', () => {
         });
     });
 
-    describe('unhighlightCellsWithValue', () => {
-        it('does nothing if no cells have the given value', () => {
+    describe('unhighlightAllCells', () => {
+        it('does nothing if no cells are highlighted', () => {
             const sudoku = SudokuBoard.createEmpty();
-            expect(sudoku).toEqual(sudoku.unhighlightCellsWithValue(1));
+            expect(sudoku).toEqual(sudoku.unhighlightAllCells());
         });
 
-        it('unhighlights all cells with a matching value', () => {
+        it('unhighlights all highlighted cells', () => {
             const sudoku = SudokuBoard.createEmpty()
                                       .selectCell(0, 0)
                                       .selectCell(2, 3)
                                       .updateSelectedValues(2)
                                       .highlightCellsWithValue(2)
-                                      .unhighlightCellsWithValue(2);
-            expect(sudoku[0][0].isHighlighted).toBe(false);
-            expect(sudoku[2][3].isHighlighted).toBe(false);
-        });
-
-        it('unhighlights all cells with a matching user value', () => {
-            const sudoku = SudokuBoard.createEmpty()
-                                      .selectCell(0, 0)
-                                      .selectCell(2, 3)
-                                      .updateSelectedUserValues(2)
-                                      .highlightCellsWithValue(2)
-                                      .unhighlightCellsWithValue(2);
-            expect(sudoku[0][0].isHighlighted).toBe(false);
-            expect(sudoku[2][3].isHighlighted).toBe(false);
-        });
-
-        it('unhighlights all cells with a matching corner mark', () => {
-            const sudoku = SudokuBoard.createEmpty()
-                                      .selectCell(0, 0)
-                                      .selectCell(2, 3)
-                                      .addToSelectedCornerMarks(2)
-                                      .highlightCellsWithValue(2)
-                                      .unhighlightCellsWithValue(2);
-            expect(sudoku[0][0].isHighlighted).toBe(false);
-            expect(sudoku[2][3].isHighlighted).toBe(false);
-        });
-
-        it('unhighlights all cells with a matching center mark', () => {
-            const sudoku = SudokuBoard.createEmpty()
-                                      .selectCell(0, 0)
-                                      .selectCell(2, 3)
-                                      .addToSelectedCenterMarks(2)
-                                      .highlightCellsWithValue(2)
-                                      .unhighlightCellsWithValue(2);
+                                      .unhighlightAllCells();
             expect(sudoku[0][0].isHighlighted).toBe(false);
             expect(sudoku[2][3].isHighlighted).toBe(false);
         });

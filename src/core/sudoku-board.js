@@ -171,22 +171,22 @@ SudokuBoard.prototype = {
     },
 
     highlightCellsWithValue(value) {
-        return this.changeHighlightingForCellsWithValue(value, true);
-    },
-
-    unhighlightCellsWithValue(value) {
-        return this.changeHighlightingForCellsWithValue(value, false);
-    },
-
-    changeHighlightingForCellsWithValue(value, isHighlighted) {
         return produce(this, draft => {
             draft.forEachRow(row => row.forEach(cell => {
                 if (cell.hasValueInSomeWay(value)) {
-                    cell.isHighlighted = isHighlighted;
+                    cell.isHighlighted = true;
                 }
             }));
         });
-    }
+    },
+
+    unhighlightAllCells() {
+        return produce(this, draft => {
+            draft.forEachRow(row => row.forEach(cell => {
+                cell.isHighlighted = false;
+            }));
+        });
+    },
 }
 
 
