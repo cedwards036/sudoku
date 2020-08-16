@@ -34,3 +34,8 @@
     padding: 20px 40px;
     border-radius: 50px;
 }
+
+.example-puzzles {
+    display: flex;
+    justify-content: space-between;
+}
