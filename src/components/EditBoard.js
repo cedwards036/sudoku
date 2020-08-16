@@ -39,7 +39,7 @@ export default function EditBoard() {
 
   function updateSelectedValues(value) {
     updateBoardState(draft => {
-      return draft.setCurrentState(boardState.currentState.updateSelectedValues(value));
+      return draft.addNewCurrentState(boardState.currentState.updateSelectedValues(value));
     });
   }
 

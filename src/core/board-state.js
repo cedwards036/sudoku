@@ -24,14 +24,6 @@ BoardState.prototype = {
             draft.future = [];
         });
     },
-
-    setCurrentState(state) {
-        return produce(this, draft => {
-            draft.past.push(draft.currentState);
-            draft.currentState = state;
-            draft.future = [];
-        });
-    },
     
     undo() {
         return produce(this, draft => {

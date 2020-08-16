@@ -71,7 +71,7 @@ export default function EditBoard() {
 
   function updateSelectedUserValues(value) {
     updateBoardState(draft => {
-      draft = draft.setCurrentState(draft.currentState.updateSelectedUserValues(value));
+      draft = draft.addNewCurrentState(draft.currentState.updateSelectedUserValues(value));
       if (draft.currentState.selectedCount === 1 && draft.currentState.userValueSuccessfullyWritten) {
         draft.currentState = draft.currentState.unhighlightAllCells().highlightCellsWithValue(value);
       }
@@ -85,7 +85,7 @@ export default function EditBoard() {
 
   function updateSelectedCornerMarks(value) {
     updateBoardState(draft => {
-      return draft.setCurrentState(draft.currentState.toggleSelectedCornerMarks(value));
+      return draft.addNewCurrentState(draft.currentState.toggleSelectedCornerMarks(value));
     });
   }
 
@@ -95,13 +95,13 @@ export default function EditBoard() {
 
   function updateSelectedCenterMarks(value) {
     updateBoardState(draft => {
-      return draft.setCurrentState(draft.currentState.toggleSelectedCenterMarks(value));
+      return draft.addNewCurrentState(draft.currentState.toggleSelectedCenterMarks(value));
     });
   }  
 
   function deleteFromSelectedCells() {
     updateBoardState(draft => {
-      return draft.setCurrentState(boardState.currentState.deleteFromSelectedCells().unhighlightAllCells());
+      return draft.addNewCurrentState(boardState.currentState.deleteFromSelectedCells().unhighlightAllCells());
     });
   }
 
