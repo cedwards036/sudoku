@@ -52,6 +52,10 @@
     color: var(--warning-color);
 }
 
+.highlighted .cell-color-layer {
+    background-color: var(--highlighted-cell-color);
+}
+
 .cell-color-layer {
     width: 100%;
     height: 100%;

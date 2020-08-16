@@ -10,6 +10,7 @@
     --border-color: rgba(150, 150, 150);
     --background-color: #121212;
     --selected-cell-color: rgba(1, 135, 134, 0.6);
+    --highlighted-cell-color: rgba(1, 135, 134, 0.3);
     --warning-color: #cf6679;
     --secondary-color: #BB86FC;
     --primary-color: #03dac6;

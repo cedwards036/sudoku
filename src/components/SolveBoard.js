@@ -27,10 +27,25 @@ export default function EditBoard() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [enterMode, setEnterMode] = useState('userValue');
   const stopSelecting = () => setIsSelecting(false);
+
   function startNewCellSelection(rowIndex, colIndex) {
     updateBoard(draft => {
-      draft.currentState = draft.currentState.clearAllSelections().selectCell(rowIndex, colIndex);
+      const selectedValue = valueToHighlight(draft.currentState[rowIndex][colIndex]);
+      draft.currentState = board.currentState.clearAllSelections()
+                                             .unhighlightAllCells()
+                                             .selectCell(rowIndex, colIndex)
+      if (selectedValue !== 0) {
+        draft.currentState = draft.currentState.highlightCellsWithValue(selectedValue);
+      }
     });
+  }
+
+  function valueToHighlight(cell) {
+    if (cell.value !== 0) {
+      return cell.value;
+    } else {
+      return cell.userValue;
+    }
   }
 
   function addCellToSelection(rowIndex, colIndex) {

@@ -15,6 +15,8 @@ export default function Cell(props) {
   
     const incorrectClass = props.isIncorrect && props.cell.userValue !== 0 ? 'cell-incorrect' : '';
 
+    const highlightClass = props.cell.isHighlighted ? 'highlighted' : '';
+
     function handleMouseDown(e) {
       props.handleSelection(props.rowIndex, props.colIndex, e);
       props.setIsSelecting(true);
@@ -49,12 +51,12 @@ export default function Cell(props) {
   
     return (
       <div 
-        className={`cell ${borderClasses} ${selectedClass} ${incorrectClass}`} 
+        className={`cell ${borderClasses} ${selectedClass} ${incorrectClass} ${highlightClass}`} 
         onMouseDown={handleMouseDown}
         onMouseEnter={handleMouseEnter}
       >
         {cellContents(props.cell.getDisplayedValues())}
-      <div className={`cell-color-layer`}></div>
+        <div className={`cell-color-layer`}></div>
       </div>
     );
   }
