@@ -42,4 +42,44 @@ BoardState.prototype = {
             }
         });
     },
+
+    clearAllSelections() {
+        return this.updateCurrentState(this.currentState.clearAllSelections());
+    },
+
+    selectCell(rowIndex, colIndex) {
+        return this.updateCurrentState(this.currentState.selectCell(rowIndex, colIndex));
+    },
+
+    selectAllCells() {
+        return this.updateCurrentState(this.currentState.selectAllCells());
+    },
+
+    highlightCellsWithValue(value) {
+        return this.updateCurrentState(this.currentState.highlightCellsWithValue(value));
+    },
+
+    unhighlightAllCells() {
+        return this.updateCurrentState(this.currentState.unhighlightAllCells());
+    },
+
+    updateSelectedValues(value) {
+        return this.addNewCurrentState(this.currentState.updateSelectedValues(value));
+    },
+
+    updateSelectedUserValues(value) {
+        return this.addNewCurrentState(this.currentState.updateSelectedUserValues(value));
+    },
+
+    toggleSelectedCornerMarks(value) {
+        return this.addNewCurrentState(this.currentState.toggleSelectedCornerMarks(value));
+    },
+
+    toggleSelectedCenterMarks(value) {
+        return this.addNewCurrentState(this.currentState.toggleSelectedCenterMarks(value));
+    },
+
+    deleteFromSelectedCells() {
+        return this.addNewCurrentState(this.currentState.deleteFromSelectedCells());
+    },
 }

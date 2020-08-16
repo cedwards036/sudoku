@@ -30,14 +30,14 @@ export default function EditBoard() {
   function startNewCellSelection(rowIndex, colIndex) {
     const selectedValue = valueToHighlight(boardState.currentState[rowIndex][colIndex]);
     if (selectedValue !== 0) {
-      setBoardState(boardState.updateCurrentState(boardState.currentState.clearAllSelections()
-                        .unhighlightAllCells()
-                        .selectCell(rowIndex, colIndex)
-                        .highlightCellsWithValue(selectedValue)));
+      setBoardState(boardState.clearAllSelections()
+                              .unhighlightAllCells()
+                              .selectCell(rowIndex, colIndex)
+                              .highlightCellsWithValue(selectedValue));
     } else {
-      setBoardState(boardState.updateCurrentState(boardState.currentState.clearAllSelections()
-                  .unhighlightAllCells()
-                  .selectCell(rowIndex, colIndex)));
+      setBoardState(boardState.clearAllSelections()
+                              .unhighlightAllCells()
+                              .selectCell(rowIndex, colIndex));
     }
   }
 
@@ -50,8 +50,7 @@ export default function EditBoard() {
   }
 
   function addCellToSelection(rowIndex, colIndex) {
-    setBoardState(boardState.updateCurrentState(boardState.currentState.selectCell(rowIndex, colIndex)
-                                                                       .unhighlightAllCells()));
+    setBoardState(boardState.selectCell(rowIndex, colIndex).unhighlightAllCells());
   }
 
   function updateCellContents(value) {
@@ -69,9 +68,9 @@ export default function EditBoard() {
   }
 
   function updateSelectedUserValues(value) {
-    const updatedBoard = boardState.addNewCurrentState(boardState.currentState.updateSelectedUserValues(value));
+    const updatedBoard = boardState.updateSelectedUserValues(value);
     if (boardState.currentState.selectedCount === 1 && boardState.currentState.userValueSuccessfullyWritten) {
-      setBoardState(updatedBoard.updateCurrentState(updatedBoard.currentState.unhighlightAllCells().highlightCellsWithValue(value)));
+      setBoardState(updatedBoard.unhighlightAllCells().highlightCellsWithValue(value));
     } else {
       setBoardState(updatedBoard);
     }
@@ -82,7 +81,7 @@ export default function EditBoard() {
   }
 
   function updateSelectedCornerMarks(value) {
-    setBoardState(boardState.addNewCurrentState(boardState.currentState.toggleSelectedCornerMarks(value)));
+    setBoardState(boardState.toggleSelectedCornerMarks(value));
   }
 
   function switchToCenterMarks() {
@@ -90,11 +89,11 @@ export default function EditBoard() {
   }
 
   function updateSelectedCenterMarks(value) {
-    setBoardState(boardState.addNewCurrentState(boardState.currentState.toggleSelectedCenterMarks(value)));
+    setBoardState(boardState.toggleSelectedCenterMarks(value));
   }  
 
   function deleteFromSelectedCells() {
-    setBoardState(boardState.addNewCurrentState(boardState.currentState.deleteFromSelectedCells().unhighlightAllCells()));
+    setBoardState(boardState.deleteFromSelectedCells().unhighlightAllCells());
   }
 
   function undo() {
@@ -106,7 +105,7 @@ export default function EditBoard() {
   }
 
   function selectAll() {
-    setBoardState(boardState.updateCurrentState(boardState.currentState.selectAllCells()));
+    setBoardState(boardState.selectAllCells());
   }
 
   function handleSelection(rowIndex, colIndex, e) {

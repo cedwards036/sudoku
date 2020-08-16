@@ -26,15 +26,15 @@ export default function EditBoard() {
   const stopSelecting = () => setIsSelecting(false);
 
   function startNewCellSelection(rowIndex, colIndex) {
-    setBoardState(boardState.updateCurrentState(boardState.currentState.clearAllSelections().selectCell(rowIndex, colIndex)));
+    setBoardState(boardState.clearAllSelections().selectCell(rowIndex, colIndex));
   }
 
   function addCellToSelection(rowIndex, colIndex) {
-    setBoardState( boardState.updateCurrentState(boardState.currentState.selectCell(rowIndex, colIndex)));
+    setBoardState(boardState.selectCell(rowIndex, colIndex));
   }
 
   function updateSelectedValues(value) {
-    setBoardState(boardState.addNewCurrentState(boardState.currentState.updateSelectedValues(value)));
+    setBoardState(boardState.updateSelectedValues(value));
   }
 
   function undo() {
@@ -46,7 +46,7 @@ export default function EditBoard() {
   }
 
   function selectAll() {
-    setBoardState(boardState.updateCurrentState(boardState.currentState.selectAllCells()));
+    setBoardState(boardState.selectAllCells());
   }
 
   function handleSelection(rowIndex, colIndex, e) {
@@ -59,7 +59,7 @@ export default function EditBoard() {
 
   function handleCellMouseEnter(rowIndex, colIndex) {
     if (isSelecting && !boardState.currentState[rowIndex][colIndex].isSelected) {
-      setBoardState(boardState.updateCurrentState(boardState.currentState.selectCell(rowIndex, colIndex)));
+      setBoardState(boardState.selectCell(rowIndex, colIndex));
     }
   }
   
