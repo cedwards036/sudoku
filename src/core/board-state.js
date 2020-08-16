@@ -1,14 +1,14 @@
 import {produce, immerable} from 'immer';
 
-export default function History(initialState) {
-    const history = Object.create(History.prototype);
+export default function BoardState(initialState) {
+    const history = Object.create(BoardState.prototype);
     history.currentState = initialState;
     history.past = [];
     history.future = [];
     return history;
 }
 
-History.prototype = {
+BoardState.prototype = {
     [immerable]: true,
 
     updateCurrentState(state) {
@@ -25,7 +25,7 @@ History.prototype = {
         });
     },
 
-    addNewCurrentState(state) {
+    setCurrentState(state) {
         return produce(this, draft => {
             draft.past.push(draft.currentState);
             draft.currentState = state;

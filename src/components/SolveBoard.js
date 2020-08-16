@@ -3,7 +3,7 @@ import {useImmer} from 'use-immer';
 import { useParams, useHistory} from 'react-router-dom';
 import Modal from 'react-modal';
 import '../styles/Modal.css';
-import History from '../core/history';
+import BoardState from '../core/board-state';
 import {encodeBoard, decodeBoard} from '../core/sudoku-board-encoding'
 import HelpButton from './HelpButton';
 import SolvePuzzleFeedback from './SolvePuzzleFeedback';
@@ -22,16 +22,16 @@ Modal.setAppElement('#root')
 export default function EditBoard() {
   const {boardEncoding} = useParams();
   const history = useHistory();
-  const [board, updateBoard] = useImmer(History(decodeBoard(boardEncoding).selectCell(0, 0)));
+  const [boardState, updateBoardState] = useImmer(BoardState(decodeBoard(boardEncoding).selectCell(0, 0)));
   const [isSelecting, setIsSelecting] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [enterMode, setEnterMode] = useState('userValue');
   const stopSelecting = () => setIsSelecting(false);
 
   function startNewCellSelection(rowIndex, colIndex) {
-    updateBoard(draft => {
+    updateBoardState(draft => {
       const selectedValue = valueToHighlight(draft.currentState[rowIndex][colIndex]);
-      draft.currentState = board.currentState.clearAllSelections()
+      draft.currentState = boardState.currentState.clearAllSelections()
                                              .unhighlightAllCells()
                                              .selectCell(rowIndex, colIndex)
       if (selectedValue !== 0) {
@@ -49,8 +49,8 @@ export default function EditBoard() {
   }
 
   function addCellToSelection(rowIndex, colIndex) {
-    updateBoard(draft => {
-      draft.currentState = board.currentState.selectCell(rowIndex, colIndex)
+    updateBoardState(draft => {
+      draft.currentState = boardState.currentState.selectCell(rowIndex, colIndex)
                                              .unhighlightAllCells();
     });
   }
@@ -70,7 +70,7 @@ export default function EditBoard() {
   }
 
   function updateSelectedUserValues(value) {
-    updateBoard(draft => {
+    updateBoardState(draft => {
       draft = draft.setCurrentState(draft.currentState.updateSelectedUserValues(value));
       if (draft.currentState.selectedCount === 1 && draft.currentState.userValueSuccessfullyWritten) {
         draft.currentState = draft.currentState.unhighlightAllCells().highlightCellsWithValue(value);
@@ -84,7 +84,7 @@ export default function EditBoard() {
   }
 
   function updateSelectedCornerMarks(value) {
-    updateBoard(draft => {
+    updateBoardState(draft => {
       return draft.setCurrentState(draft.currentState.toggleSelectedCornerMarks(value));
     });
   }
@@ -94,27 +94,27 @@ export default function EditBoard() {
   }
 
   function updateSelectedCenterMarks(value) {
-    updateBoard(draft => {
+    updateBoardState(draft => {
       return draft.setCurrentState(draft.currentState.toggleSelectedCenterMarks(value));
     });
   }  
 
   function deleteFromSelectedCells() {
-    updateBoard(draft => {
-      return draft.setCurrentState(board.currentState.deleteFromSelectedCells().unhighlightAllCells());
+    updateBoardState(draft => {
+      return draft.setCurrentState(boardState.currentState.deleteFromSelectedCells().unhighlightAllCells());
     });
   }
 
   function undo() {
-    updateBoard(draft => draft.undo());
+    updateBoardState(draft => draft.undo());
   }
 
   function redo() {
-    updateBoard(draft => draft.redo());
+    updateBoardState(draft => draft.redo());
   }
 
   function selectAll() {
-    updateBoard(draft => {
+    updateBoardState(draft => {
       draft.currentState = draft.currentState.selectAllCells();
     });
   }
@@ -128,15 +128,15 @@ export default function EditBoard() {
   }
 
   function handleCellMouseEnter(rowIndex, colIndex) {
-    if (isSelecting && !board.currentState[rowIndex][colIndex].isSelected) {
+    if (isSelecting && !boardState.currentState[rowIndex][colIndex].isSelected) {
       addCellToSelection(rowIndex, colIndex);
     }
   }
   
   function handleKeyDown(e) {
-    if (board.currentState.hasSelection && !modalIsOpen) {
-      const rowIndex = board.currentState.topSelectedRowIndex;
-      const colIndex = board.currentState.topSelectedColIndex;
+    if (boardState.currentState.hasSelection && !modalIsOpen) {
+      const rowIndex = boardState.currentState.topSelectedRowIndex;
+      const colIndex = boardState.currentState.topSelectedColIndex;
       if (isArrowKey(e.keyCode)) {
         handleArrowKeyDown(e, rowIndex, colIndex);
       } else if (isNumberKey(e.keyCode)) {
@@ -184,11 +184,11 @@ export default function EditBoard() {
   }
 
   function incrementWithWraparound(index) {
-    return (index + board.currentState.size + 1) % board.currentState.size;
+    return (index + boardState.currentState.size + 1) % boardState.currentState.size;
   }
 
   function decrementWithWraparound(index) {
-    return (index + board.currentState.size - 1) % board.currentState.size;
+    return (index + boardState.currentState.size - 1) % boardState.currentState.size;
   }
 
   function isNumberKey(keyCode) {
@@ -248,11 +248,11 @@ export default function EditBoard() {
   }
 
   useEffect(() => {
-    const currentEncoding = encodeBoard(board.currentState);
+    const currentEncoding = encodeBoard(boardState.currentState);
     if (boardEncoding !== currentEncoding) {
       history.replace(currentEncoding);
     }
-  }, [history, board, boardEncoding]);
+  }, [history, boardState, boardEncoding]);
 
   useEffect(() => {
     if (window) {
@@ -266,22 +266,22 @@ export default function EditBoard() {
   });
 
   function getSolutionsCount() {
-    return board.currentState.solutions.length;
+    return boardState.currentState.solutions.length;
   }
 
   return (
     <div className="board">
       <HelpButton handleClick={openModal}/>
       <SolvePuzzleFeedback 
-        solutionCount={board.currentState.solutions.length}
-        incorrectCells={board.currentState.getIncorrectCells()}
+        solutionCount={boardState.currentState.solutions.length}
+        incorrectCells={boardState.currentState.getIncorrectCells()}
       />
       <Grid 
-        board={board.currentState}
+        board={boardState.currentState}
         handleSelection={handleSelection}
         handleCellMouseEnter={handleCellMouseEnter}
         setIsSelecting={setIsSelecting}
-        incorrectCells={board.currentState.getIncorrectCells()}
+        incorrectCells={boardState.currentState.getIncorrectCells()}
       />
       <SolveControlBoard 
         handleNumberClick={updateCellContents}
@@ -292,9 +292,9 @@ export default function EditBoard() {
         handleNormalClick={switchToUserValues}
         handleCornerClick={switchToCornerMarks}
         handleCenterClick={switchToCenterMarks}
-        solveURL={`/solve/${encodeBoard(board.currentState)}`}
-        canUndo={board.past.length > 0}
-        canRedo={board.future.length > 0}
+        solveURL={`/solve/${encodeBoard(boardState.currentState)}`}
+        canUndo={boardState.past.length > 0}
+        canRedo={boardState.future.length > 0}
         solutionCount={getSolutionsCount()}
       />
       <Modal
