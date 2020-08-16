@@ -31,11 +31,15 @@ export default function EditBoard() {
   function startNewCellSelection(rowIndex, colIndex) {
     updateBoardState(draft => {
       const selectedValue = valueToHighlight(draft.currentState[rowIndex][colIndex]);
-      draft.currentState = boardState.currentState.clearAllSelections()
-                                             .unhighlightAllCells()
-                                             .selectCell(rowIndex, colIndex)
       if (selectedValue !== 0) {
-        draft.currentState = draft.currentState.highlightCellsWithValue(selectedValue);
+        return draft.updateCurrentState(boardState.currentState.clearAllSelections()
+                    .unhighlightAllCells()
+                    .selectCell(rowIndex, colIndex)
+                    .highlightCellsWithValue(selectedValue));
+      } else {
+        return draft.updateCurrentState(boardState.currentState.clearAllSelections()
+                    .unhighlightAllCells()
+                    .selectCell(rowIndex, colIndex));
       }
     });
   }
@@ -50,8 +54,8 @@ export default function EditBoard() {
 
   function addCellToSelection(rowIndex, colIndex) {
     updateBoardState(draft => {
-      draft.currentState = boardState.currentState.selectCell(rowIndex, colIndex)
-                                             .unhighlightAllCells();
+      return draft.updateCurrentState(boardState.currentState.selectCell(rowIndex, colIndex)
+                                                             .unhighlightAllCells());
     });
   }
 
@@ -71,11 +75,12 @@ export default function EditBoard() {
 
   function updateSelectedUserValues(value) {
     updateBoardState(draft => {
-      draft = draft.addNewCurrentState(draft.currentState.updateSelectedUserValues(value));
+      const updatedDraft = draft.addNewCurrentState(draft.currentState.updateSelectedUserValues(value));
       if (draft.currentState.selectedCount === 1 && draft.currentState.userValueSuccessfullyWritten) {
-        draft.currentState = draft.currentState.unhighlightAllCells().highlightCellsWithValue(value);
+        return updatedDraft.updateCurrentState(updatedDraft.currentState.unhighlightAllCells().highlightCellsWithValue(value));
+      } else {
+        return updatedDraft;
       }
-      return draft;
     });
   }
 
@@ -115,7 +120,7 @@ export default function EditBoard() {
 
   function selectAll() {
     updateBoardState(draft => {
-      draft.currentState = draft.currentState.selectAllCells();
+      return draft.updateCurrentState(draft.currentState.selectAllCells());
     });
   }
 

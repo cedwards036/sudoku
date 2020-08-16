@@ -25,15 +25,16 @@ export default function EditBoard() {
   const [isSelecting, setIsSelecting] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const stopSelecting = () => setIsSelecting(false);
+
   function startNewCellSelection(rowIndex, colIndex) {
     updateBoardState(draft => {
-      draft.currentState = draft.currentState.clearAllSelections().selectCell(rowIndex, colIndex);
+      return draft.updateCurrentState(draft.currentState.clearAllSelections().selectCell(rowIndex, colIndex));
     });
   }
 
   function addCellToSelection(rowIndex, colIndex) {
     updateBoardState(draft => {
-      draft.currentState = draft.currentState.selectCell(rowIndex, colIndex)
+      return draft.updateCurrentState(draft.currentState.selectCell(rowIndex, colIndex));
     });
   }
 
@@ -53,7 +54,7 @@ export default function EditBoard() {
 
   function selectAll() {
     updateBoardState(draft => {
-      draft.currentState = draft.currentState.selectAllCells();
+      return draft.updateCurrentState(draft.currentState.selectAllCells());
     });
   }
 
@@ -68,7 +69,7 @@ export default function EditBoard() {
   function handleCellMouseEnter(rowIndex, colIndex) {
     if (isSelecting && !boardState.currentState[rowIndex][colIndex].isSelected) {
       updateBoardState(draft => {
-        draft.currentState = draft.currentState.selectCell(rowIndex, colIndex);
+        return draft.updateCurrentState(draft.currentState.selectCell(rowIndex, colIndex));
       });
     }
   }
