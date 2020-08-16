@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import '../styles/Modal.css';
 import BoardState from '../core/board-state';
-import { encodeBoard, decodeBoard } from '../core/sudoku-board-encoding'
+import { encodeBoard } from '../core/sudoku-board-encoding'
 import HelpButton from './HelpButton';
 import CreationPuzzleFeedback from './CreationPuzzleFeedback';
 import Grid from './Grid';

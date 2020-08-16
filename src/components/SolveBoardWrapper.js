@@ -7,7 +7,7 @@ export default function SolveBoardWrapper() {
     const { boardEncoding } = useParams();
     try {
         if (boardEncoding[0] === '4') {
-            throw "invalid url"
+            throw new Error();
         }
         const initialBoard = decodeBoard(boardEncoding).selectCell(0, 0);
         return <SolveBoard initialBoard={initialBoard} boardEncoding={boardEncoding}/>

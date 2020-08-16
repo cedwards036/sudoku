@@ -9,7 +9,6 @@ import Header from './components/Header';
 import HomePage from './components/HomePage';
 import EditBoardWrapper from './components/EditBoardWrapper';
 import SolveBoardWrapper from './components/SolveBoardWrapper';
-import SolveBoard from './components/SolveBoard';
 import Footer from './components/Footer';
 
 function App() {
