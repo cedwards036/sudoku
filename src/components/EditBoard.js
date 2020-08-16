@@ -17,10 +17,9 @@ const DOWN_ARROW = 40;
 
 Modal.setAppElement('#root')
 
-export default function EditBoard() {
-    const { boardEncoding } = useParams();
+export default function EditBoard(props) {
     const history = useHistory();
-    const [boardState, setBoardState] = useState(BoardState(decodeBoard(boardEncoding).selectCell(0, 0)));
+    const [boardState, setBoardState] = useState(BoardState(props.initialBoard));
     const [isSelecting, setIsSelecting] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const stopSelecting = () => setIsSelecting(false);
@@ -161,10 +160,10 @@ export default function EditBoard() {
 
     useEffect(() => {
         const currentEncoding = encodeBoard(boardState.currentState);
-        if (boardEncoding !== currentEncoding) {
+        if (props.boardEncoding !== currentEncoding) {
             history.replace(currentEncoding);
         }
-    }, [history, boardState, boardEncoding]);
+    }, [history, boardState, props.boardEncoding]);
 
     useEffect(() => {
         if (window) {
