@@ -110,6 +110,18 @@ SudokuBoard.prototype = {
         });
     },
 
+    toggleSelectedCornerMarks(newMark) {
+        return produce(this, draft => {
+            draft.forEachSelected(cell => {
+                if (cell.cornerMarks.includes(newMark)) {
+                    cell.removeCornerMark(newMark);
+                } else {
+                    cell.addCornerMark(newMark);
+                }
+            });
+        });
+    },
+
     removeFromSelectedCornerMarks(newMark) {
         return produce(this, draft => {
             draft.forEachSelected(cell => {
@@ -122,6 +134,18 @@ SudokuBoard.prototype = {
         return produce(this, draft => {
             draft.forEachSelected(cell => {
                 cell.addCenterMark(newMark);
+            });
+        });
+    },
+
+    toggleSelectedCenterMarks(newMark) {
+        return produce(this, draft => {
+            draft.forEachSelected(cell => {
+                if (cell.centerMarks.includes(newMark)) {
+                    cell.removeCenterMark(newMark);
+                } else {
+                    cell.addCenterMark(newMark);
+                }
             });
         });
     },

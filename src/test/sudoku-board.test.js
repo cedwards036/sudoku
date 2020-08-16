@@ -213,6 +213,40 @@ describe('SudokuBoard', () => {
         });
     });
 
+    describe('toggleSelectedCornerMarks', () => {
+        it('does nothing if no cells are selected', () => {
+            const sudoku = SudokuBoard.createEmpty();
+            expect(sudoku).toEqual(sudoku.toggleSelectedCornerMarks(3));
+        });
+
+        it('removes the mark if the cell already has the mark', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .toggleSelectedCornerMarks(3);
+            expect(sudoku.toggleSelectedCornerMarks(3)[0][0].cornerMarks).toEqual([]);
+        });
+        
+        it('adds the new corner mark to all selected cells', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .selectCell(1, 4)
+                                        .selectCell(3, 1)
+                                        .toggleSelectedCornerMarks(3);
+            expect(sudoku[0][0].cornerMarks).toContain(3);
+            expect(sudoku[1][4].cornerMarks).toContain(3);
+            expect(sudoku[3][1].cornerMarks).toContain(3);
+        });
+
+        it('keeps the corner marks in sorted order', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .toggleSelectedCornerMarks(3)
+                                        .toggleSelectedCornerMarks(1)
+                                        .toggleSelectedCornerMarks(9);
+            expect(sudoku[0][0].cornerMarks).toEqual([1, 3, 9]);
+        });
+    });
+
     describe('removeFromSelectedCornerMarks', () => {
         it('does nothing if no cells are selected', () => {
             const sudoku = SudokuBoard.createEmpty();
@@ -270,6 +304,40 @@ describe('SudokuBoard', () => {
                                         .addToSelectedCenterMarks(6)
                                         .addToSelectedCenterMarks(5);
             expect(sudoku[0][0].centerMarks).toEqual([5, 6, 7]);
+        });
+    });
+
+    describe('toggleSelectedCenterMarks', () => {
+        it('does nothing if no cells are selected', () => {
+            const sudoku = SudokuBoard.createEmpty();
+            expect(sudoku).toEqual(sudoku.toggleSelectedCenterMarks(3));
+        });
+
+        it('removes the mark if the cell already has the mark', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .toggleSelectedCenterMarks(3);
+            expect(sudoku.toggleSelectedCenterMarks(3)[0][0].centerMarks).toEqual([]);
+        });
+        
+        it('adds the new center mark to all selected cells', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .selectCell(1, 4)
+                                        .selectCell(3, 1)
+                                        .toggleSelectedCenterMarks(3);
+            expect(sudoku[0][0].centerMarks).toContain(3);
+            expect(sudoku[1][4].centerMarks).toContain(3);
+            expect(sudoku[3][1].centerMarks).toContain(3);
+        });
+
+        it('keeps the center marks in sorted order', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .toggleSelectedCenterMarks(3)
+                                        .toggleSelectedCenterMarks(1)
+                                        .toggleSelectedCenterMarks(9);
+            expect(sudoku[0][0].centerMarks).toEqual([1, 3, 9]);
         });
     });
 

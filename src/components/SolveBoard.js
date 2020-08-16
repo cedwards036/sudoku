@@ -85,7 +85,7 @@ export default function EditBoard() {
 
   function updateSelectedCornerMarks(value) {
     updateBoard(draft => {
-      return draft.setCurrentState(draft.currentState.addToSelectedCornerMarks(value));
+      return draft.setCurrentState(draft.currentState.toggleSelectedCornerMarks(value));
     });
   }
 
@@ -95,7 +95,7 @@ export default function EditBoard() {
 
   function updateSelectedCenterMarks(value) {
     updateBoard(draft => {
-      return draft.setCurrentState(draft.currentState.addToSelectedCenterMarks(value));
+      return draft.setCurrentState(draft.currentState.toggleSelectedCenterMarks(value));
     });
   }  
 
