@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import '../styles/Modal.css';
 import BoardState from '../core/board-state';
