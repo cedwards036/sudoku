@@ -98,11 +98,7 @@ SudokuBoard.prototype = {
                     updatedCount += 1;
                 }
             });
-            if (updatedCount > 0) {
-                draft.userValueSuccessfullyWritten = true;
-            } else {
-                draft.userValueSuccessfullyWritten = false;
-            }
+            draft.userValueSuccessfullyWritten = updatedCount > 0;
         });
     },
 
