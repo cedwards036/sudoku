@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {useImmer} from 'use-immer';
 import { useParams, useHistory} from 'react-router-dom';
 import Modal from 'react-modal';
 import '../styles/Modal.css';
@@ -22,26 +21,24 @@ Modal.setAppElement('#root')
 export default function EditBoard() {
   const {boardEncoding} = useParams();
   const history = useHistory();
-  const [boardState, updateBoardState] = useImmer(BoardState(decodeBoard(boardEncoding).selectCell(0, 0)));
+  const [boardState, setBoardState] = useState(BoardState(decodeBoard(boardEncoding).selectCell(0, 0)));
   const [isSelecting, setIsSelecting] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [enterMode, setEnterMode] = useState('userValue');
   const stopSelecting = () => setIsSelecting(false);
 
   function startNewCellSelection(rowIndex, colIndex) {
-    updateBoardState(draft => {
-      const selectedValue = valueToHighlight(draft.currentState[rowIndex][colIndex]);
-      if (selectedValue !== 0) {
-        return draft.updateCurrentState(boardState.currentState.clearAllSelections()
-                    .unhighlightAllCells()
-                    .selectCell(rowIndex, colIndex)
-                    .highlightCellsWithValue(selectedValue));
-      } else {
-        return draft.updateCurrentState(boardState.currentState.clearAllSelections()
-                    .unhighlightAllCells()
-                    .selectCell(rowIndex, colIndex));
-      }
-    });
+    const selectedValue = valueToHighlight(boardState.currentState[rowIndex][colIndex]);
+    if (selectedValue !== 0) {
+      setBoardState(boardState.updateCurrentState(boardState.currentState.clearAllSelections()
+                        .unhighlightAllCells()
+                        .selectCell(rowIndex, colIndex)
+                        .highlightCellsWithValue(selectedValue)));
+    } else {
+      setBoardState(boardState.updateCurrentState(boardState.currentState.clearAllSelections()
+                  .unhighlightAllCells()
+                  .selectCell(rowIndex, colIndex)));
+    }
   }
 
   function valueToHighlight(cell) {
@@ -53,10 +50,8 @@ export default function EditBoard() {
   }
 
   function addCellToSelection(rowIndex, colIndex) {
-    updateBoardState(draft => {
-      return draft.updateCurrentState(boardState.currentState.selectCell(rowIndex, colIndex)
-                                                             .unhighlightAllCells());
-    });
+    setBoardState(boardState.updateCurrentState(boardState.currentState.selectCell(rowIndex, colIndex)
+                                                                       .unhighlightAllCells()));
   }
 
   function updateCellContents(value) {
@@ -74,14 +69,12 @@ export default function EditBoard() {
   }
 
   function updateSelectedUserValues(value) {
-    updateBoardState(draft => {
-      const updatedDraft = draft.addNewCurrentState(draft.currentState.updateSelectedUserValues(value));
-      if (draft.currentState.selectedCount === 1 && draft.currentState.userValueSuccessfullyWritten) {
-        return updatedDraft.updateCurrentState(updatedDraft.currentState.unhighlightAllCells().highlightCellsWithValue(value));
-      } else {
-        return updatedDraft;
-      }
-    });
+    const updatedBoard = boardState.addNewCurrentState(boardState.currentState.updateSelectedUserValues(value));
+    if (boardState.currentState.selectedCount === 1 && boardState.currentState.userValueSuccessfullyWritten) {
+      setBoardState(updatedBoard.updateCurrentState(updatedBoard.currentState.unhighlightAllCells().highlightCellsWithValue(value)));
+    } else {
+      setBoardState(updatedBoard);
+    }
   }
 
   function switchToCornerMarks() {
@@ -89,9 +82,7 @@ export default function EditBoard() {
   }
 
   function updateSelectedCornerMarks(value) {
-    updateBoardState(draft => {
-      return draft.addNewCurrentState(draft.currentState.toggleSelectedCornerMarks(value));
-    });
+    setBoardState(boardState.addNewCurrentState(boardState.currentState.toggleSelectedCornerMarks(value)));
   }
 
   function switchToCenterMarks() {
@@ -99,29 +90,23 @@ export default function EditBoard() {
   }
 
   function updateSelectedCenterMarks(value) {
-    updateBoardState(draft => {
-      return draft.addNewCurrentState(draft.currentState.toggleSelectedCenterMarks(value));
-    });
+    setBoardState(boardState.addNewCurrentState(boardState.currentState.toggleSelectedCenterMarks(value)));
   }  
 
   function deleteFromSelectedCells() {
-    updateBoardState(draft => {
-      return draft.addNewCurrentState(boardState.currentState.deleteFromSelectedCells().unhighlightAllCells());
-    });
+    setBoardState(boardState.addNewCurrentState(boardState.currentState.deleteFromSelectedCells().unhighlightAllCells()));
   }
 
   function undo() {
-    updateBoardState(draft => draft.undo());
+    setBoardState(boardState.undo());
   }
 
   function redo() {
-    updateBoardState(draft => draft.redo());
+    setBoardState(boardState.redo());
   }
 
   function selectAll() {
-    updateBoardState(draft => {
-      return draft.updateCurrentState(draft.currentState.selectAllCells());
-    });
+    setBoardState(boardState.updateCurrentState(boardState.currentState.selectAllCells()));
   }
 
   function handleSelection(rowIndex, colIndex, e) {

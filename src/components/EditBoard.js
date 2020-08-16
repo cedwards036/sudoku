@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {useImmer} from 'use-immer';
 import { useParams, useHistory} from 'react-router-dom';
 import Modal from 'react-modal';
 import '../styles/Modal.css';
@@ -21,41 +20,33 @@ Modal.setAppElement('#root')
 export default function EditBoard() {
   const {boardEncoding} = useParams();
   const history = useHistory();
-  const [boardState, updateBoardState] = useImmer(BoardState(decodeBoard(boardEncoding).selectCell(0, 0)));
+  const [boardState, setBoardState] = useState(BoardState(decodeBoard(boardEncoding).selectCell(0, 0)));
   const [isSelecting, setIsSelecting] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const stopSelecting = () => setIsSelecting(false);
 
   function startNewCellSelection(rowIndex, colIndex) {
-    updateBoardState(draft => {
-      return draft.updateCurrentState(draft.currentState.clearAllSelections().selectCell(rowIndex, colIndex));
-    });
+    setBoardState(boardState.updateCurrentState(boardState.currentState.clearAllSelections().selectCell(rowIndex, colIndex)));
   }
 
   function addCellToSelection(rowIndex, colIndex) {
-    updateBoardState(draft => {
-      return draft.updateCurrentState(draft.currentState.selectCell(rowIndex, colIndex));
-    });
+    setBoardState( boardState.updateCurrentState(boardState.currentState.selectCell(rowIndex, colIndex)));
   }
 
   function updateSelectedValues(value) {
-    updateBoardState(draft => {
-      return draft.addNewCurrentState(boardState.currentState.updateSelectedValues(value));
-    });
+    setBoardState(boardState.addNewCurrentState(boardState.currentState.updateSelectedValues(value)));
   }
 
   function undo() {
-    updateBoardState(draft => draft.undo());
+    setBoardState(boardState.undo());
   }
 
   function redo() {
-    updateBoardState(draft => draft.redo());
+    setBoardState(boardState.redo());
   }
 
   function selectAll() {
-    updateBoardState(draft => {
-      return draft.updateCurrentState(draft.currentState.selectAllCells());
-    });
+    setBoardState(boardState.updateCurrentState(boardState.currentState.selectAllCells()));
   }
 
   function handleSelection(rowIndex, colIndex, e) {
@@ -68,9 +59,7 @@ export default function EditBoard() {
 
   function handleCellMouseEnter(rowIndex, colIndex) {
     if (isSelecting && !boardState.currentState[rowIndex][colIndex].isSelected) {
-      updateBoardState(draft => {
-        return draft.updateCurrentState(draft.currentState.selectCell(rowIndex, colIndex));
-      });
+      setBoardState(boardState.updateCurrentState(boardState.currentState.selectCell(rowIndex, colIndex)));
     }
   }
   
