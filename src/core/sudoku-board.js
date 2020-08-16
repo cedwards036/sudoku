@@ -102,14 +102,6 @@ SudokuBoard.prototype = {
         });
     },
 
-    addToSelectedCornerMarks(newMark) {
-        return produce(this, draft => {
-            draft.forEachSelected(cell => {
-                cell.addCornerMark(newMark);
-            });
-        });
-    },
-
     toggleSelectedCornerMarks(newMark) {
         return produce(this, draft => {
             draft.forEachSelected(cell => {
@@ -122,22 +114,6 @@ SudokuBoard.prototype = {
         });
     },
 
-    removeFromSelectedCornerMarks(newMark) {
-        return produce(this, draft => {
-            draft.forEachSelected(cell => {
-                cell.removeCornerMark(newMark);
-            });
-        });
-    },
-
-    addToSelectedCenterMarks(newMark) {
-        return produce(this, draft => {
-            draft.forEachSelected(cell => {
-                cell.addCenterMark(newMark);
-            });
-        });
-    },
-
     toggleSelectedCenterMarks(newMark) {
         return produce(this, draft => {
             draft.forEachSelected(cell => {
@@ -146,14 +122,6 @@ SudokuBoard.prototype = {
                 } else {
                     cell.addCenterMark(newMark);
                 }
-            });
-        });
-    },
-
-    removeFromSelectedCenterMarks(newMark) {
-        return produce(this, draft => {
-            draft.forEachSelected(cell => {
-                cell.removeCenterMark(newMark);
             });
         });
     },
