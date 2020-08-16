@@ -50,7 +50,8 @@ export default function EditBoard() {
 
   function addCellToSelection(rowIndex, colIndex) {
     updateBoard(draft => {
-      draft.currentState = draft.currentState.selectCell(rowIndex, colIndex)
+      draft.currentState = board.currentState.selectCell(rowIndex, colIndex)
+                                             .unhighlightAllCells();
     });
   }
 
@@ -124,9 +125,7 @@ export default function EditBoard() {
 
   function handleCellMouseEnter(rowIndex, colIndex) {
     if (isSelecting && !board.currentState[rowIndex][colIndex].isSelected) {
-      updateBoard(draft => {
-        draft.currentState = draft.currentState.selectCell(rowIndex, colIndex);
-      });
+      addCellToSelection(rowIndex, colIndex);
     }
   }
   
