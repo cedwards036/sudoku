@@ -11,7 +11,13 @@ export default function History(initialState) {
 History.prototype = {
     [immerable]: true,
 
-    setCurrentState(state) {
+    updateCurrentState(state) {
+        return produce(this, draft => {
+            draft.currentState = state;
+        });
+    },
+
+    addNewCurrentState(state) {
         return produce(this, draft => {
             draft.past.push(draft.currentState);
             draft.currentState = state;
@@ -19,6 +25,14 @@ History.prototype = {
         });
     },
 
+    addNewCurrentState(state) {
+        return produce(this, draft => {
+            draft.past.push(draft.currentState);
+            draft.currentState = state;
+            draft.future = [];
+        });
+    },
+    
     undo() {
         return produce(this, draft => {
             if (draft.past.length > 0) {
