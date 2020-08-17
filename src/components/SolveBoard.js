@@ -5,6 +5,7 @@ import '../styles/Modal.css';
 import BoardState from '../core/board-state';
 import { encodeBoard } from '../core/sudoku-board-encoding'
 import HelpButton from './HelpButton';
+import Timer from './Timer';
 import SolvePuzzleFeedback from './SolvePuzzleFeedback';
 import Grid from './Grid';
 import SolveControlBoard from './SolveControlBoard';
@@ -257,12 +258,17 @@ export default function EditBoard(props) {
         return boardState.currentState.solutions.length;
     }
 
+    function puzzleIsSolved() {
+        return Object.keys(boardState.currentState.getIncorrectCells()).length === 0
+    }
+
     return (
         <div className="board">
+            <Timer isActive={!puzzleIsSolved()}/>
             <HelpButton handleClick={openModal} />
             <SolvePuzzleFeedback
                 solutionCount={boardState.currentState.solutions.length}
-                incorrectCells={boardState.currentState.getIncorrectCells()}
+                puzzleIsSolved={puzzleIsSolved()}
             />
             <Grid
                 board={boardState.currentState}

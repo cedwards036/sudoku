@@ -10,7 +10,7 @@ export default function CreationPuzzleFeedback(props) {
     } else if (props.solutionCount > 1) {
       feedbackText = 'Warning: This puzzle has more than one solution :(';
       feedbackClass = 'puzzle-feedback-bad';
-    } else if (Object.keys(props.incorrectCells).length === 0) {
+    } else if (props.puzzleIsSolved) {
       feedbackText = 'Puzzle solved! :)';
       feedbackClass = 'puzzle-feedback-good';
     } else {
