@@ -4,7 +4,7 @@ header {
     width: 100%;
     margin-bottom: 10px;
     padding: 10px 0px;
-    font-size: 2em;
+    font-size: var(--header-font-size);
     text-align: center;
 }
 

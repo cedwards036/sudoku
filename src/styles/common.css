@@ -1,11 +1,18 @@
 :root {
-    --cell-size: 8vw;
+    --cell-size: 9vw;
     --max-cell-size: 54px;
     --light-border-width: 1px;
     --light-border: solid var(--light-border-width) var(--border-color);
     --heavy-border-width: 3px;
     --heavy-border: solid var(--heavy-border-width) var(--border-color);
     --cell-value-font-size: 40px;
+    --button-font-size: 1.5em;
+    --corner-mark-font-size: 0.9em;
+    --button-border-radius: 10px;
+    --feedback-font-size: 1.125em;
+    --board-padding: 20px 40px;
+    --feedback-padding: 15px;
+    --header-font-size: 2em;
     --font-color: rgb(255, 255, 255);
     --border-color: rgba(150, 150, 150);
     --background-color: #121212;
@@ -15,4 +22,18 @@
     --secondary-color: #BB86FC;
     --primary-color: #03dac6;
     --modal-overlay-color: rgba(50, 50, 50, 0.7);
+}
+
+@media only screen and (max-width: 700px) {
+    :root {
+        font-size: 0.8em;
+
+        --cell-value-font-size: 6vw;
+        --button-font-size: 4vw;
+        --button-border-radius: 2vw;
+        --feedback-font-size: 3vw;
+        --board-padding: 10px 20px;
+        --feedback-padding: 3vw;
+        --corner-mark-font-size: 0.8em;
+    }
 }

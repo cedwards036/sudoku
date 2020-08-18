@@ -2,5 +2,5 @@
     position: absolute;
     left: 30px;
     top: 30px;
-    font-size: 1.5em;
+    font-size: var(--button-font-size);
 }

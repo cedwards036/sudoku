@@ -1,7 +1,7 @@
 import React from 'react';
-import '../styles/CreationPuzzleFeedback.css';
+import '../styles/PuzzleFeedback.css';
 
-export default function CreationPuzzleFeedback(props) {
+export default function SolvePuzzleFeedback(props) {
     let feedbackText;
     let feedbackClass;
     if (props.solutionCount === 0) {

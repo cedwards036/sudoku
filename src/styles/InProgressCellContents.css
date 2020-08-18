@@ -15,7 +15,7 @@
 
 .corner-mark {
     position: absolute;
-    font-size: 0.9em;
+    font-size: var(--corner-mark-font-size);
 }
 
 .corner-mark-ul {

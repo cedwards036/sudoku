@@ -3,10 +3,10 @@
 .puzzle-feedback {
     height: 15px;
     margin-bottom: 15px;
-    padding: 15px;
+    padding: var(--feedback-padding);
     border-radius: 15px;
     text-align: center;
-    font-size: 18px;
+    font-size: var(--feedback-font-size);
     line-height: 15px;
     color: black;
 }
