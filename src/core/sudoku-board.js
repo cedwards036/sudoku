@@ -9,6 +9,7 @@ export default function SudokuBoard(boardArray) {
         board[index] = row.map(value => SudokuCell(value));
     });
     board.size = boardArray.length;
+    board.boxSize = Math.sqrt(board.size);
     board.topSelectedRowIndex = -1;
     board.topSelectedColIndex = -1;
     board.hasSelection = false;
@@ -32,6 +33,22 @@ SudokuBoard.prototype = {
         });
     },
 
+    forEachCellInCol(colIndex, callback) {
+        range(this.size).forEach(rowIndex => {
+            callback(this[rowIndex][colIndex], rowIndex, colIndex);
+        });
+    },
+
+    forEachCellInBox(boxIndex, callback) {
+        const startingRowIndex =  Math.floor(boxIndex / this.boxSize) * this.boxSize;
+        const startingColIndex = (boxIndex % this.boxSize) * this.boxSize;
+        for (let rowIndex = startingRowIndex; rowIndex < startingRowIndex + this.boxSize; rowIndex++) {
+            for (let colIndex = startingColIndex; colIndex < startingColIndex + this.boxSize; colIndex++) {
+                callback(this[rowIndex][colIndex], rowIndex, colIndex);
+            }
+        }
+    },
+
     mapRows(callback) {
         return range(this.size).map(rowIndex => {
             return callback(this[rowIndex], rowIndex);
@@ -39,9 +56,9 @@ SudokuBoard.prototype = {
     },
 
     forEachSelected(callback) {
-        this.forEachRow(row => row.forEach((cell, index) => {
+        this.forEachRow((row, rowIndex) => row.forEach((cell, colIndex) => {
             if (cell.isSelected) {
-                callback(cell, index);
+                callback(cell, rowIndex, colIndex);
             }
         }));
     },
@@ -92,10 +109,13 @@ SudokuBoard.prototype = {
     updateSelectedUserValues(newUserValue) {
         return produce(this, draft => {
             let updatedCount = 0;
-            draft.forEachSelected(cell => {
+            draft.forEachSelected((cell, rowIndex, colIndex) => {
                 if (cell.value === 0) {
                     cell.userValue = newUserValue;
                     updatedCount += 1;
+                    removePencilMarksFromRow(draft, rowIndex, newUserValue);
+                    removePencilMarksFromCol(draft, colIndex, newUserValue);
+                    removePencilMarksFromBox(draft, rowIndex, colIndex, newUserValue);
                 }
             });
             draft.userValueSuccessfullyWritten = updatedCount > 0;
@@ -185,11 +205,34 @@ SudokuBoard.prototype = {
             }));
         });
     },
+
+    cellBoxIndex(rowIndex, colIndex) {
+        const boxSize = Math.sqrt(this.size);
+        return Math.floor(rowIndex / boxSize) * boxSize + Math.floor(colIndex / boxSize);
+    },
 }
 
 
 function getSolutions(board) {
     return solveClassicSudoku(board.toValuesArray());
+}
+
+function removePencilMarksFromRow(board, rowIndex, value) {
+    board[rowIndex].forEach(cell => removePencilMarks(cell, value));
+}
+
+function removePencilMarksFromCol(board, colIndex, value) {
+    board.forEachCellInCol(colIndex, cell => removePencilMarks(cell, value));
+}
+
+function removePencilMarksFromBox(board, rowIndex, colIndex, value) {
+    const boxIndex = board.cellBoxIndex(rowIndex, colIndex);
+    board.forEachCellInBox(boxIndex, cell => removePencilMarks(cell, value));
+}
+
+function removePencilMarks(cell, value) {
+    cell.removeCornerMark(value);
+    cell.removeCenterMark(value);
 }
 
 function range(n) {

@@ -177,6 +177,34 @@ describe('SudokuBoard', () => {
                                         .updateSelectedUserValues(3);
             expect(sudoku[0][0].userValue).toEqual(0);
         });
+
+        it('removes any intersecting corner marks with the same value as the newly-entered number', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .selectCell(4, 1)
+                                        .selectCell(1, 8)
+                                        .toggleSelectedCornerMarks(7)
+                                        .clearAllSelections()
+                                        .selectCell(1, 1)
+                                        .updateSelectedUserValues(7);
+            expect(sudoku[0][0].cornerMarks.length).toEqual(0);
+            expect(sudoku[4][1].cornerMarks.length).toEqual(0);
+            expect(sudoku[1][8].cornerMarks.length).toEqual(0);
+        });
+
+        it('removes any intersecting center marks with the same value as the newly-entered number', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .selectCell(4, 1)
+                                        .selectCell(1, 8)
+                                        .toggleSelectedCenterMarks(7)
+                                        .clearAllSelections()
+                                        .selectCell(1, 1)
+                                        .updateSelectedUserValues(7);
+            expect(sudoku[0][0].centerMarks.length).toEqual(0);
+            expect(sudoku[4][1].centerMarks.length).toEqual(0);
+            expect(sudoku[1][8].centerMarks.length).toEqual(0);
+        });
     });
 
     describe('toggleSelectedCornerMarks', () => {
