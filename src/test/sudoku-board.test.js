@@ -17,6 +17,19 @@ describe('SudokuBoard', () => {
         expect(sudoku.hasSelection).toEqual(false);
     });
 
+    describe('currentValueCounts', () => {
+        it('initializes with an accurate count of each number\'s usage in the board', () => {
+            const sudoku = SudokuBoard([
+                [2, 1, 0, 3],
+                [4, 0, 2, 1],
+                [0, 2, 0, 0],
+                [1, 0, 3, 2]
+            ]);
+            expect(sudoku.currentValueCounts.length).toBe(5);
+            expect(sudoku.currentValueCounts).toEqual([6, 3, 4, 2, 1])
+        });
+    });
+
     describe('forEachRow', () => {
         it('iterates over the rows of the board, applying the given function', () => {
             let nums = [];
@@ -151,6 +164,24 @@ describe('SudokuBoard', () => {
             expect(sudoku[1][4].value).toEqual(3);
             expect(sudoku[3][1].value).toEqual(3);
         });
+
+        it('increments the usage count for the updated value', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .selectCell(1, 4)
+                                        .selectCell(3, 1)
+                                        .updateSelectedValues(3);
+            expect(sudoku.currentValueCounts[3]).toBe(3);
+        });
+
+        it('decrements the usage count for the previous cell value(s)', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .selectCell(1, 4)
+                                        .selectCell(3, 1)
+                                        .updateSelectedValues(3);
+            expect(sudoku.currentValueCounts[0]).toBe(78);
+        });
     });
 
     describe('updateSelectedUserValues', () => {
@@ -204,6 +235,24 @@ describe('SudokuBoard', () => {
             expect(sudoku[0][0].centerMarks.length).toEqual(0);
             expect(sudoku[4][1].centerMarks.length).toEqual(0);
             expect(sudoku[1][8].centerMarks.length).toEqual(0);
+        });
+
+        it('increments the usage count for the updated value', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .selectCell(1, 4)
+                                        .selectCell(3, 1)
+                                        .updateSelectedUserValues(3);
+            expect(sudoku.currentValueCounts[3]).toBe(3);
+        });
+
+        it('decrements the usage count for the previous cell value(s)', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .selectCell(1, 4)
+                                        .selectCell(3, 1)
+                                        .updateSelectedUserValues(3);
+            expect(sudoku.currentValueCounts[0]).toBe(78);
         });
     });
 
@@ -281,7 +330,7 @@ describe('SudokuBoard', () => {
             expect(sudoku).toEqual(sudoku.deleteFromSelectedCells());
         });
         
-        it('only removes user values from cells with user values', () => {
+        it('only removes user values (not pencil marks) from cells with user values', () => {
             const sudoku = SudokuBoard.createEmpty()
                                         .selectCell(0, 0)
                                         .toggleSelectedCenterMarks(7)
@@ -303,6 +352,17 @@ describe('SudokuBoard', () => {
             expect(sudoku[0][0].centerMarks).not.toContain(7);
             expect(sudoku[0][0].cornerMarks).not.toContain(2);
             expect(sudoku[0][0].cornerMarks).not.toContain(3);
+        });
+
+        it('decrements value counts for any deleted user values', () => {
+            const sudoku = SudokuBoard.createEmpty()
+                                        .selectCell(0, 0)
+                                        .toggleSelectedCenterMarks(7)
+                                        .toggleSelectedCornerMarks(2)
+                                        .updateSelectedUserValues(3)
+                                        .deleteFromSelectedCells();
+            expect(sudoku.currentValueCounts[3]).toBe(0);
+            expect(sudoku.currentValueCounts[0]).toBe(81);
         });
     });
 

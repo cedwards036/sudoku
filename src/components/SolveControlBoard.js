@@ -31,6 +31,7 @@ export default function SolveControlBoard(props) {
         return <ControlButton 
                     key={num} 
                     handleClick={handleClick}
+                    disabled={props.valueCounts[num] >= 9}
                 >
                     {num}
                 </ControlButton>

@@ -289,6 +289,7 @@ export default function EditBoard(props) {
                 solveURL={`/solve/${encodeBoard(boardState.currentState)}`}
                 canUndo={boardState.past.length > 0}
                 canRedo={boardState.future.length > 0}
+                valueCounts={boardState.currentState.currentValueCounts}
                 solutionCount={getSolutionsCount()}
             />
             <Modal

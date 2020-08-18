@@ -15,6 +15,7 @@ export default function SudokuBoard(boardArray) {
     board.hasSelection = false;
     board.solutions = getSolutions(board);
     board.selectedCount = 0;
+    board.currentValueCounts = getValueCounts(board);
     board.userValueSuccessfullyWritten = false;
     return board;
 }
@@ -100,7 +101,9 @@ SudokuBoard.prototype = {
     updateSelectedValues(newValue) {
         return produce(this, draft => {
             draft.forEachSelected(cell => {
+                draft.decrementValueCount(cell.userValue);
                 cell.value = newValue;
+                draft.incrementValueCount(newValue);
             });
             draft.solutions = getSolutions(draft);
         });
@@ -111,8 +114,10 @@ SudokuBoard.prototype = {
             let updatedCount = 0;
             draft.forEachSelected((cell, rowIndex, colIndex) => {
                 if (cell.value === 0) {
+                    draft.decrementValueCount(cell.userValue);
                     cell.userValue = newUserValue;
-                    updatedCount += 1;
+                    updatedCount++;
+                    draft.incrementValueCount(newUserValue);
                     removePencilMarksFromRow(draft, rowIndex, newUserValue);
                     removePencilMarksFromCol(draft, colIndex, newUserValue);
                     removePencilMarksFromBox(draft, rowIndex, colIndex, newUserValue);
@@ -150,7 +155,9 @@ SudokuBoard.prototype = {
         return produce(this, draft => {
             draft.forEachSelected(cell => {
                 if (cell.userValue !== 0) {
+                    draft.decrementValueCount(cell.userValue);
                     cell.userValue = 0;
+                    draft.incrementValueCount(0);
                 } else {
                     cell.deleteInProgressMarks();
                 }
@@ -206,12 +213,31 @@ SudokuBoard.prototype = {
         });
     },
 
+    incrementValueCount(value) {
+        this.currentValueCounts[value]++;
+    },
+
+    decrementValueCount(value) {
+        this.currentValueCounts[value]--;
+    },
+
     cellBoxIndex(rowIndex, colIndex) {
         const boxSize = Math.sqrt(this.size);
         return Math.floor(rowIndex / boxSize) * boxSize + Math.floor(colIndex / boxSize);
     },
 }
 
+function getValueCounts(board) {
+    const counts = Array(board.size + 1).fill(0);
+    board.forEachRow(row => row.forEach(cell => {
+        if (cell.userValue !== 0) {
+            counts[cell.userValue]++;
+        } else {
+            counts[cell.value]++;
+        }
+    }));
+    return counts;
+}
 
 function getSolutions(board) {
     return solveClassicSudoku(board.toValuesArray());
