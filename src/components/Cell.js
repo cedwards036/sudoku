@@ -20,10 +20,12 @@ export default function Cell(props) {
     function handleMouseDown(e) {
       props.handleSelection(props.rowIndex, props.colIndex, e);
       props.setIsSelecting(true);
+      e.preventDefault();
     }
   
-    function handleMouseEnter() {
+    function handleMouseEnter(e) {
       props.handleCellMouseEnter(props.rowIndex, props.colIndex);
+      e.preventDefault();
     }
   
     function valueToString(value) {
@@ -52,8 +54,9 @@ export default function Cell(props) {
     return (
       <div 
         className={`cell ${borderClasses} ${selectedClass} ${incorrectClass} ${highlightClass}`} 
-        onPointerDown={handleMouseDown}
-        onPointerOver={handleMouseEnter}
+        onTouchStart={handleMouseDown}
+        onMouseDown={handleMouseDown}
+        onMouseEnter={handleMouseEnter}
       >
         {cellContents(props.cell.getDisplayedValues())}
         <div className={`cell-color-layer`}></div>
