@@ -52,8 +52,8 @@ export default function Cell(props) {
     return (
       <div 
         className={`cell ${borderClasses} ${selectedClass} ${incorrectClass} ${highlightClass}`} 
-        onMouseDown={handleMouseDown}
-        onMouseEnter={handleMouseEnter}
+        onPointerDown={handleMouseDown}
+        onPointerOver={handleMouseEnter}
       >
         {cellContents(props.cell.getDisplayedValues())}
         <div className={`cell-color-layer`}></div>
