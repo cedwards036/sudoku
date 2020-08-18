@@ -53,9 +53,9 @@ export default function HomePage() {
                 </p>
                 <h2>Try it out</h2>
                 <div className="example-puzzles">
-                    <Link to="/solve/93tZMuCwULWV7FWnFbmDyFTFVUDdSeNCjsiQbNPFSC0GI" target="_blank" rel="noopener noreferrer">Easy Puzzle</Link>
-                    <Link to="/solve/9SL1vPJO7vnBoivhWksTTqOSDPXXHPklYFJpwcvCgSSs2T" target="_blank" rel="noopener noreferrer">Medium Puzzle</Link>
-                    <Link to="/solve/916dCgTKpyzzmdA0z74k2LFdrFfn3h9UH46gauTd3Jr9kOw" target="_blank" rel="noopener noreferrer">Hard Puzzle</Link>
+                    <Link to="/solve/93tZMuCwULWV7FWnFbmDyFTFVUDdSeNCjsiQbNPFSC0GI">Easy Puzzle</Link>
+                    <Link to="/solve/9SL1vPJO7vnBoivhWksTTqOSDPXXHPklYFJpwcvCgSSs2T">Medium Puzzle</Link>
+                    <Link to="/solve/916dCgTKpyzzmdA0z74k2LFdrFfn3h9UH46gauTd3Jr9kOw">Hard Puzzle</Link>
                 </div>
             </div>
         </div>
